@@ -1,0 +1,127 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+  @apply bg-cover bg-center bg-no-repeat;
+  background-image: url("/background.png");
+  min-height: 100vh;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+@theme inline {
+  /* Кастомные переменные — расшифровка через var(--имя) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-bright: var(--primary-bright);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted-light: var(--muted-light);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-light: var(--destructive-light);
+  --color-destructive-bright: var(--destructive-bright);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --shadow: 0 4px 6px var(--shadow-color);
+  --shadow-color: oklch(0.6389 0.0949 53.11 / 20%);
+
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.1 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.1 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.1 0 0);
+
+  --primary: oklch(0.7555 0.1548 53.57);
+  --primary-bright: oklch(0.7 0.1875 43.41);
+  --primary-foreground: oklch(1 0 0); /* Белый */
+
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.2 0 0);
+
+  --muted: oklch(1 0 0 / 30%);
+  --muted-light: oklch(0.8552 0.0058 264.53);
+  --muted-foreground: oklch(0.5 0 0);
+
+  --accent: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.2 0 0);
+
+  --destructive: oklch(0.65 0.22 27.32);
+  --destructive-bright: oklch(0.9292 0.0358 24.19);
+  --destructive-light: oklch(0.9708 0.0143 28.01);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.65 0 0);
+}
+
+.dark {
+  --background: oklch(0.14 0 0);
+  --foreground: oklch(0.98 0 0);
+  --shadow-color: oklch(0.724 0.0578 240.88 / 20.34%);
+  --shadow: 0 4px 16px var(--shadow-color);
+
+  --card: oklch(0.2 0 0);
+  --card-foreground: oklch(0.98 0 0);
+
+  --popover: oklch(0.2 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+
+  --primary: oklch(0.7555 0.1548 53.57); /* тот же оранжевый */
+  --primary-bright: oklch(0.75 0.2 43.41);
+
+  --primary-foreground: oklch(1 0 0); /* белый */
+
+  --secondary: oklch(0.3 0 0);
+  --secondary-foreground: oklch(0.98 0 0);
+
+  --muted: oklch(0 0 0 / 20%);
+  --muted-light: oklch(0.9276 0.0058 264.53 / 20%);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.3 0 0);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --destructive: oklch(0.7 0.2 25);
+  --destructive-bright: oklch(0.2896 0.0587 19.76);
+  --destructive-light: oklch(0.1802 0.0724 20.68 / 52%);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.55 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
