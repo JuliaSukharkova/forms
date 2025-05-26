@@ -1,45 +1,56 @@
+import { cn } from "@/lib/utils";
 import type { SidebarItemType } from "@/utils/types/type";
-import { useDraggable } from "@dnd-kit/core";
 import { BookPlus, CircleCheck, SquarePen, Text } from "lucide-react";
+import { useRef } from "react";
+import { useDrag } from "react-dnd";
 
-export const SidebarItem = ({
-  item,
-}: {
-  item: SidebarItemType;
-}) => {
-  const { attributes, listeners, setNodeRef } = useDraggable({
-    id: `sidebar-${item.id}`,
-    data: {
-      from: "sidebar",
-      component: item.type,
-      dataType: item.data,
-    },
-  });
+export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: 'FORM_ELEMENT',
+    item,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+  dragRef(ref);
+  let icon;
+  let label;
+
+  switch (true) {
+    case item.type === "answer" && item.data === "single":
+      icon = <SquarePen className="w-4 h-4" />;
+      label = "Single line answer";
+      break;
+
+    case item.type === "answer" && item.data === "multiple":
+      icon = <Text className="w-4 h-4" />;
+      label = "Multiple line answer";
+      break;
+
+    case item.type === "multipleList" && item.data === "single":
+      icon = <CircleCheck className="w-4 h-4" />;
+      label = "Single choice list";
+      break;
+    case item.type === "multipleList" && item.data === "multiple":
+      icon = <BookPlus className="w-4 h-4" />;
+      label = "Multiple choice list";
+      break;
+    default:
+      return null;
+  }
+
+  if (!item) return null;
   return (
     <div
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      className="cursor-move flex items-center gap-2"
-    >
-      {item.type === "answer" &&  item.data === "single" ? (
-        <>
-          <SquarePen className="w-4 h-4" />
-          Single line answer
-        </>
-      ) : item.data === "multiple" && item.type === "answer" ? (
-        <>
-          <Text className="w-4 h-4" /> Multiple line answer
-        </>
-      ) : item.type === "multipleList" && item.data === "multiple" ? (
-        <>
-          <CircleCheck className="w-4 h-4" /> Single choice list
-        </>
-      ) : (
-        <>
-          <BookPlus className="w-4 h-4" /> Multiple choice list
-        </>
+      ref={ref}
+      className={cn(
+        "cursor-pointer flex items-center gap-2",
+        isDragging ? "opacity-50" : ""
       )}
+    >
+      {icon}
+      {label}
     </div>
   );
 };

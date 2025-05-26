@@ -32,22 +32,23 @@ import { cn } from "@/lib/utils";
 export const MultipleList = ({
   element,
   onDelete,
-  isPreview,
   onCopyBelow,
   onCopyToEnd,
-  // onDragStart,
-  // onDragEnd,
+  onChange,
+  requiredField,
 }: IFormProps) => {
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState(["Option 1"]);
   const [type, setType] = useState<"single" | "multiple">(element.dataType);
+  const [options, setOptions] = useState<string[]>([""]);
 
   const handleAddOption = () => {
-    setOptions([...options, `Option ${options.length + 1}`]);
+    setOptions([...options, ""]);
   };
 
   const handleRemoveOption = (index: number) => {
-    setOptions(options.filter((_, i) => i !== index));
+    const updatedOptions = options.filter((_, i) => i !== index);
+    setOptions(updatedOptions);
+    onChange({ options: updatedOptions });
   };
 
   const toggleType = (newType: "single" | "multiple") => {
@@ -55,15 +56,18 @@ export const MultipleList = ({
   };
 
   return (
-    <div
-      className={cn(
-        "flex border border-border bg-card text-card-foreground rounded-md w-full  transition-shadow shadow-[var(--shadow)]",
-        isPreview ? "opacity-50" : ""
-      )}
-    >
+    <div className="flex border border-border bg-card text-card-foreground rounded-md w-full  transition-shadow shadow-[var(--shadow)] active:border-dashed">
       <div className="flex flex-col gap-2.5 w-full">
         <div className="px-4 pt-2 flex flex-col items-start">
-          <Input defaultValue={element.label} placeholder="Question" />
+          <Input
+            value=""
+            placeholder={element.label}
+            onChange={(e) => onChange({ label: e.target.value })}
+            className={cn(
+              requiredField && !element.label.trim() && "border-destructive"
+            )}
+            required
+          />
         </div>
 
         {options.map((option, index) => (
@@ -73,7 +77,20 @@ export const MultipleList = ({
             ) : (
               <Square className="w-4 h-4 stroke-primary" />
             )}
-            <Input placeholder={option} />
+            <Input
+              value={option}
+              placeholder={`Option ${index + 1}`}
+              className={cn(
+                requiredField && !option.trim() && "border-destructive"
+              )}
+              onChange={(e) => {
+                const updatedOptions = [...options];
+                updatedOptions[index] = e.target.value;
+                setOptions(updatedOptions);
+                onChange({ options: updatedOptions });
+              }}
+              required
+            />
             {options.length > 1 && (
               <CircleMinus
                 onClick={() => handleRemoveOption(index)}
@@ -100,9 +117,11 @@ export const MultipleList = ({
 
           <Popover>
             <PopoverTrigger asChild>
-              <button className="relative flex py-1.5 px-16 text-primary backdrop-blur-[4px] bg-primary/10 hover:backdrop-blur-[4px] shadow rounded-md cursor-pointer">
-                {type === "single" ? "Single choice" : "Multiple choice"}
-                <ChevronDown className="absolute top-2 right-2 w-5 h-5 stroke-primary" />
+              <button className="relative flex items-center py-1.5 xl:px-10 lg:px-10 md:px-7 xs:px-2 gap-2 text-primary backdrop-blur-[4px] bg-primary/10 hover:backdrop-blur-[4px] shadow rounded-md cursor-pointer">
+                <span>
+                  {type === "single" ? "Single choice" : "Multiple choice"}
+                </span>
+                <ChevronDown className="absolute top-2 right-2 w-4 h-4 stroke-primary" />
               </button>
             </PopoverTrigger>
             <PopoverContent
@@ -188,7 +207,14 @@ export const MultipleList = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span role="presentation" className="inline-flex">
-                    <Switch id="requiredField" className="cursor-pointer" />
+                    <Switch
+                      id="requiredField"
+                      className="cursor-pointer"
+                      checked={element.required}
+                      onCheckedChange={(checked) =>
+                        onChange({ required: checked })
+                      }
+                    />
                   </span>
                 </TooltipTrigger>
                 <TooltipContent
@@ -213,14 +239,6 @@ export const MultipleList = ({
 
       <button
         draggable="true"
-        onDragStart={(e) => {
-          // onDragStart(e);
-          e.dataTransfer.setData(
-            "aplication/json",
-            JSON.stringify({ type: "reorder", id: element.id })
-          );
-        }}
-        // onDragEnd={onDragEnd}
         className="relative flex items-center cursor-pointer"
       >
         <Separator orientation="vertical" className="h-full" />

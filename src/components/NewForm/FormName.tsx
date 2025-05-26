@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { cn } from "@/lib/utils";
 
-export const FormName = () => {
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+interface FormNameProps {
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  desc: string;
+  setDesc: React.Dispatch<React.SetStateAction<string>>;
+  requiredField: boolean;
+}
+
+export const FormName: FC<FormNameProps> = ({
+  name,
+  setName,
+  desc,
+  setDesc,
+  requiredField,
+}) => {
   const [isDescFocused, setIsDescFocused] = useState(false);
   const descHasValue = desc.trim() !== "";
 
@@ -14,20 +26,24 @@ export const FormName = () => {
       <Input
         placeholder="Name"
         value={name}
+        required
         onChange={(e) => setName(e.target.value)}
         className={cn(
           "text-lg font-semibold transition-colors",
-          name && "!text-xl"
+          name && "!text-lg",
+          requiredField && !name.trim() && "border-destructive"
         )}
       />
       <Textarea
         placeholder="Description"
         value={desc}
+        required
         onChange={(e) => setDesc(e.target.value)}
         onFocus={() => setIsDescFocused(true)}
         onBlur={() => setIsDescFocused(false)}
         className={cn(
           "transition-colors resize-none",
+          requiredField && !desc.trim() && "border-destructive",
           descHasValue && !isDescFocused
             ? "text-muted-foreground"
             : "text-foreground"
