@@ -19,19 +19,26 @@ export const AnswerForm = ({
   element,
   onDelete,
   onCopyBelow,
-  onCopyToEnd
+  onCopyToEnd,
+  onChange,
+  requiredField,
 }: IFormProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const type: "single" | "multiple" = element.dataType;
 
   return (
-    <div
-      className={cn(
-        "flex border rounded-md w-full transition-shadow shadow-[var(--shadow)]")}
-    >
+    <div className="flex border bg-card rounded-md w-full transition-shadow shadow-[var(--shadow)] active:border-dashed">
       <div className="flex flex-col w-full">
         <div className="px-4 py-2 flex flex-col items-start">
-          <Input defaultValue={element.label} placeholder="Question" />
+          <Input
+            value=""
+            placeholder={element.label}
+            onChange={(e) => onChange({ label: e.target.value })}
+            className={cn(
+              requiredField && !element.label.trim() && "border-destructive"
+            )}
+            required
+          />
         </div>
         <Separator />
         <div className="flex justify-between px-4 py-2">
@@ -89,7 +96,14 @@ export const AnswerForm = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span role="presentation" className="inline-flex">
-                    <Switch id="requiredField" className="cursor-pointer" />
+                    <Switch
+                      id="requiredField"
+                      className="cursor-pointer"
+                      checked={element.required}
+                      onCheckedChange={(checked) =>
+                        onChange({ required: checked })
+                      }
+                    />
                   </span>
                 </TooltipTrigger>
                 <TooltipContent
@@ -105,21 +119,13 @@ export const AnswerForm = ({
               className="cursor-pointer [&_svg]:shrink-0 hover:bg-accent rounded-md p-2"
               onClick={onDelete}
             >
-              <X className="w-[w-4 h-4 stroke-red-600" />
+              <X className="w-[w-4 h-4 stroke-destructive" />
             </button>
           </div>
         </div>
       </div>
       <button
         draggable="true"
-        onDragStart={(e) => {
-          // onDragStart(e);
-          e.dataTransfer.setData(
-            "aplication/json",
-            JSON.stringify({ type: "reorder", id: element.id })
-          );
-        }}
-        // onDragEnd={onDragEnd}
         className="relative flex items-center cursor-pointer"
       >
         <Separator orientation="vertical" className="h-full" />

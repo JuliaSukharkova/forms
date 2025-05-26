@@ -14,8 +14,8 @@ export interface IFormProps {
   isPreview?: boolean;
   onCopyBelow: () => void;
   onCopyToEnd: () => void;
-  // onDragStart: (e: React.DragEvent) => void;
-  // onDragEnd: (e: React.DragEvent) => void;
+  onChange: (updatedFields: Partial<FormElement>) => void;
+  requiredField: boolean;
 }
 
 export type IChoiceForm = {
@@ -28,11 +28,11 @@ export type IChoiceForm = {
 export type FieldType = "answer" | "multipleList";
 export type DataType = "single" | "multiple";
 
-export type SidebarItemType={
+export type SidebarItemType = {
   id: string;
-  type: string;
-  data: string;
-}
+  type: "answer" | "multipleList";
+  data: "single" | "multiple";
+};
 
 export interface FormElement {
   id: string;
@@ -54,10 +54,17 @@ export type DroppedData =
       id: string;
     };
 
-
-export const sidebarItems = [
-  { id: nanoid(), type: 'answer', data: 'single' },
-  { id: nanoid(), type: 'answer', data: 'multiple' },
-  { id: nanoid(), type: 'multipleList', data: 'single' },
-  { id: nanoid(), type: 'multipleList', data: 'multiple'  },
+export const sidebarItems: SidebarItemType[] = [
+  { id: nanoid(), type: "answer", data: "single" },
+  { id: nanoid(), type: "answer", data: "multiple" },
+  { id: nanoid(), type: "multipleList", data: "single" },
+  { id: nanoid(), type: "multipleList", data: "multiple" },
 ];
+
+export type FormSettings = {
+  name: string;
+  description: string;
+  timeLimit?: Date | null;
+  tag?: string;
+  elements: FormElement[];
+};
