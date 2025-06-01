@@ -48,7 +48,7 @@ export const FormBuilder = ({
   const handleAddForm = (component: FieldType, type: DataType) => {
     const newElement: FormElement = {
       id: nanoid(),
-      label: "Question",
+      label: "",
       required: false,
       component: component,
       dataType: type,
@@ -109,7 +109,7 @@ export const FormBuilder = ({
       {formElements.map((el, index) =>
         el.component === "answer" ? (
           <div key={el.id}>
-            <DraggableFormItem index={index} moveItem={moveItem}>
+            <DraggableFormItem key={el.id} index={index} moveItem={moveItem}>
               <AnswerForm
                 key={el.id}
                 element={el}

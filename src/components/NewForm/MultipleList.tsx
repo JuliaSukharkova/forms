@@ -39,7 +39,7 @@ export const MultipleList = ({
 }: IFormProps) => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<"single" | "multiple">(element.dataType);
-  const [options, setOptions] = useState<string[]>([""]);
+  const [options, setOptions] = useState<string[]>(element.options ? element.options : []);
 
   const handleAddOption = () => {
     setOptions([...options, ""]);
@@ -60,8 +60,8 @@ export const MultipleList = ({
       <div className="flex flex-col gap-2.5 w-full">
         <div className="px-4 pt-2 flex flex-col items-start">
           <Input
-            value=""
-            placeholder={element.label}
+            value={element.label}
+            placeholder="Enter question"
             onChange={(e) => onChange({ label: e.target.value })}
             className={cn(
               requiredField && !element.label.trim() && "border-destructive"
