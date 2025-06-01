@@ -1,0 +1,172 @@
+import { getFormById } from "@/api/getFormById";
+import { getResponsesForm } from "@/api/getResponsesForm";
+import { BackButton } from "@/components/BackButton";
+import { SortedMenu } from "@/components/SortedMenu";
+import { Title } from "@/components/Title";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useAuthUser } from "@/hooks/useAuthUse";
+import { cn } from "@/lib/utils";
+import type { FormFromDB, ResponseElements } from "@/utils/types/type";
+import { ChartPie, TableIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+export const FormResponsesPage = () => {
+  const user = useAuthUser();
+  const { id: formId } = useParams<{ id: string }>();
+  const [form, setForm] = useState<FormFromDB>();
+  const [answers, setAnswers] = useState<ResponseElements[]>([]);
+  const [isAnalitics, setIsAnanlitics] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = useState<SortType>("new");
+  const sortLabel = {
+    new: "New first",
+    old: "Old first",
+  };
+  type SortType = keyof typeof sortLabel;
+  const sortedAnswers = [...answers].sort((a, b) => {
+    switch (sortOrder) {
+      case "new":
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      case "old":
+        return (
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      default:
+        return 0;
+    }
+  });
+  const allAnswers = sortedAnswers.map((item) => item.answers);
+
+  useEffect(() => {
+    const fetchForms = async () => {
+      if (!user || !formId) return;
+      try {
+        const data = await getFormById(user.uid, formId);
+        const answers = await getResponsesForm(formId);
+        setForm(data);
+        setAnswers(answers);
+      } catch (err) {
+        console.error("Error loading form", err);
+      }
+    };
+    fetchForms();
+  }, [formId, user]);
+
+  if (!form) return;
+
+  return (
+    <div className="m-5">
+      <BackButton />
+      <Title text="Responses" className="my-5" />
+      <div className="relative w-full rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6 transition-shadow shadow-[var(--shadow)]">
+        <div className="flex flex-col justify-center items-center gap-2.5 mb-2.5">
+          <h1 className="text-lg">{form.name}</h1>
+          <h2 className="text-center">{form.description}</h2>
+        </div>
+        <div className="flex flex-col gap-1 mb-2.5">
+          <div className="flex items-center">
+            <button
+              aria-selected={!isAnalitics}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-md transition-all  font-medium cursor-pointer",
+                !isAnalitics
+                  ? "text-primary"
+                  : "hover:bg-accent hover:text-accent-foreground"
+              )}
+              onClick={() => setIsAnanlitics(false)}
+            >
+              <TableIcon className="w-4 h-4" />
+              Table
+            </button>
+            <button
+              aria-selected={isAnalitics}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-md transition-all  font-medium cursor-pointer",
+                isAnalitics
+                  ? "text-primary"
+                  : "hover:bg-accent hover:text-accent-foreground"
+              )}
+              onClick={() => setIsAnanlitics(true)}
+            >
+              <ChartPie className="w-4 h-4" />
+              Settings
+            </button>
+          </div>
+          <div className="relative w-full h-0.5 bg-border rounded overflow-hidden">
+            <div
+              className={cn(
+                "absolute top-0 h-full bg-primary transition-all duration-300 rounded-md",
+                isAnalitics ? "left-23 w-25" : "left-0 w-20"
+              )}
+            />
+          </div>
+        </div>
+        <SortedMenu
+          value={sortOrder}
+          onChange={setSortOrder}
+          sortLabel={sortLabel}
+        />
+        <div className="rounded-md overflow-hidden border border-primary/20 mt-2.5">
+          {allAnswers.length > 1 ? (
+            <Table className="bg-accent/70 w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-10 text-center border-r border-border">
+                    №
+                  </TableHead>
+                  {form.elements.map((el, id) => (
+                    <TableHead
+                      className="border-r border-border last:border-r-0 text-center "
+                      key={id}
+                    >
+                      {el.label}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {allAnswers.map((answerRow, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="text-center border-r border-border">
+                      {index + 1}
+                    </TableCell>
+                    {form.elements.map((question, colIndex) => {
+                      const answer = answerRow.find(
+                        (a) => a.label === question.label
+                      );
+                      return (
+                        <TableCell
+                          key={colIndex}
+                          className="text-center border-r border-border last:border-0"
+                        >
+                          {answer &&
+                          Array.isArray(answer.value) &&
+                          answer?.value.length > 0
+                            ? answer.value.join(", ")
+                            : answer?.value || "-"}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="bg-accent/70 w-full p-4 text-center">
+              Nothing found.
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,33 +1,35 @@
-import { supabase} from "@/lib/supabase";
+import { timeLimitSeconds } from "@/hooks/time";
+import { supabase } from "@/lib/supabase";
 import type { FormSettings } from "@/utils/types/type";
 
-export const saveFormToSupabase = async (
+export const createFormToSupabase = async (
   userId: string,
-  form: FormSettings
+  form: FormSettings,
+  formId: string
 ) => {
   const { name, description, tag, timeLimit, elements } = form;
-  const timeLimitSeconds = timeLimit
-  ? timeLimit.getHours() * 3600 + timeLimit.getMinutes() * 60 + timeLimit.getSeconds()
-  : null; 
-  
+  const time = timeLimit ? timeLimitSeconds(timeLimit) : 0;;
+
   const { error, data } = await supabase
     .from("forms")
     .insert([
       {
+        id: formId,
         name,
         description,
         tag,
-        time_limit: timeLimitSeconds,
+        time_limit: time,
         user_id: userId,
-        form_elements: elements,
+        elements: elements,
       },
     ])
-    .select();
+    .select()
+    .single();
 
   if (error) {
     console.error("Error saving form:", error);
     throw error;
   }
 
-  return data;
+  return data.id;
 };

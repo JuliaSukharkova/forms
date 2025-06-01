@@ -1,19 +1,35 @@
 import { cn } from "@/lib/utils";
-import { Clock8, House, Save, Settings } from "lucide-react";
+import { House, Save, Settings, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { sidebarItems } from "@/utils/types/type";
 import { SidebarItem } from "./SidebarItem";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { deleteFormById } from "@/api/deleteFormById";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { Separator } from "../ui/separator";
+import { TimePickerInput } from "../TimePickerInput";
 
 interface SidebarFormProps {
   onSave: () => void;
   tag: string;
   setTag: React.Dispatch<React.SetStateAction<string>>;
-  time: Date | null;
-  setTime: React.Dispatch<React.SetStateAction<Date | null>>;
+  time: string;
+  setTime: React.Dispatch<React.SetStateAction<string>>;
+  updateForm: boolean;
+  formId?: string;
 }
 
 export const SidebarForm = ({
@@ -22,11 +38,24 @@ export const SidebarForm = ({
   setTag,
   time,
   setTime,
+  updateForm,
+  formId,
 }: SidebarFormProps) => {
   const [isSettings, setIsSettings] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const handleDelete = async () => {
+    if (!formId) return;
+    try {
+      await deleteFormById(formId);
+      toast.success("Form successfully deleted");
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting form:", error);
+    }
+  };
 
   return (
-    <div className="w-full sticky top-2 px-5 pb-5 self-start max-w-72 mx-auto rounded-xl border border-border backdrop-blur-[4px] bg-muted p-6  transition-shadow shadow-[var(--shadow)] space-y-6">
+    <div className="w-full sticky top-25 px-5 pb-5 self-start max-w-72 mx-auto rounded-xl border border-border backdrop-blur-[4px] bg-muted p-6  transition-shadow shadow-[var(--shadow)] space-y-6">
       <div className="flex items-center justify-between">
         <button
           aria-selected={!isSettings}
@@ -70,17 +99,10 @@ export const SidebarForm = ({
         <div className="space-y-4  text-muted-foreground">
           <div className="relative w-full flex flex-col">
             <span className=" mb-1">Limit</span>
-            <DatePicker
-              selected={time}
-              onChange={(date) => setTime(date)}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={1}
-              timeCaption="Time"
-              dateFormat="HH:mm:ss"
-              className="h-9 px-3 cursor-pointer !w-full border border-border rounded-md"
+            <TimePickerInput
+              value={/^\d{2}:\d{2}:\d{2}$/.test(time) ? time : "00:00:00"}
+              onChange={(time) => setTime(time)}
             />
-            <Clock8 className="absolute right-3 top-9 w-4 h-4 text-muted-foreground pointer-events-none" />
           </div>
           <div>
             <label className="block mb-1">Tags</label>
@@ -98,12 +120,47 @@ export const SidebarForm = ({
           ))}
         </div>
       )}
-      <div className="pt-4 border-t border-border space-y-3">
+      <div className="flex flex-col gap-3">
+        <Separator />
         <h2 className="text-center  font-semibold">Actions</h2>
+        {updateForm && (
+          <Button asChild variant="secondary" className="w-full cursor-pointer">
+            <Link to={`/form/${formId}`}>View</Link>
+          </Button>
+        )}
         <Button onClick={onSave} className="w-full cursor-pointer">
-          <Save className="w-4 h-4 mr-1" />
+          <Save className="w-4 h-4" />
           Save form
         </Button>
+        {updateForm && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="w-full cursor-pointer">
+                <Trash2 className="w-4 h-4 stroke-destructive" />
+                Delete form
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Form</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete this form?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="cursor-pointer">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className="cursor-pointer bg-destructive hover:bg-destructive/80"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
     </div>
   );

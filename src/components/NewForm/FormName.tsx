@@ -9,6 +9,7 @@ interface FormNameProps {
   desc: string;
   setDesc: React.Dispatch<React.SetStateAction<string>>;
   requiredField: boolean;
+  updateForm: boolean
 }
 
 export const FormName: FC<FormNameProps> = ({
@@ -17,9 +18,10 @@ export const FormName: FC<FormNameProps> = ({
   desc,
   setDesc,
   requiredField,
+  updateForm
 }) => {
   const [isDescFocused, setIsDescFocused] = useState(false);
-  const descHasValue = desc.trim() !== "";
+  const descHasValue = updateForm && desc.trim() !== "";
 
   return (
     <div className="rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6  transition-shadow shadow-[var(--shadow)] space-y-3 ">
@@ -31,7 +33,7 @@ export const FormName: FC<FormNameProps> = ({
         className={cn(
           "text-lg font-semibold transition-colors",
           name && "!text-lg",
-          requiredField && !name.trim() && "border-destructive"
+          requiredField && updateForm &&  !name.trim() && "border-destructive"
         )}
       />
       <Textarea
@@ -43,7 +45,7 @@ export const FormName: FC<FormNameProps> = ({
         onBlur={() => setIsDescFocused(false)}
         className={cn(
           "transition-colors resize-none",
-          requiredField && !desc.trim() && "border-destructive",
+          requiredField  && "border-destructive",
           descHasValue && !isDescFocused
             ? "text-muted-foreground"
             : "text-foreground"

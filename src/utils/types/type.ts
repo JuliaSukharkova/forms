@@ -64,7 +64,31 @@ export const sidebarItems: SidebarItemType[] = [
 export type FormSettings = {
   name: string;
   description: string;
-  timeLimit?: Date | null;
+  timeLimit?: string;
   tag?: string;
   elements: FormElement[];
 };
+
+export type FormFromDB = {
+  id: string;
+  name: string;
+  description: string;
+  time_limit: string;
+  tag?: string;
+  user_id: string;
+  elements: FormElement[];
+  created_at: Date;
+};
+
+export type AnswerElement = {
+  id: string;
+  label: string;
+  value: string | string[];
+};
+
+export type Answers = Record<string, string | string[]>;
+
+export type ResponseElements = {
+  created_at: Date;
+  answers: AnswerElement[]
+}

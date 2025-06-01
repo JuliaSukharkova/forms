@@ -2,8 +2,10 @@ import { NavLink } from "react-router-dom";
 import { Logo } from "../Logo/Logo";
 import ThemeToggle from "./ThemeToggle";
 import LogoutButton from "./LogoutButton";
+import {v4 as uuidv4} from 'uuid'
 
 const Header = () => {
+  const formId = uuidv4()
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-[4px] bg-muted flex justify-between items-center px-6 py-4 transition-shadow shadow-[var(--shadow)] h-20 text-base font-light">
       <NavLink to="/" className="cursor-pointer">
@@ -19,7 +21,7 @@ const Header = () => {
           Home
         </NavLink>
         <NavLink
-          to="/new"
+          to={`/form/${formId}/edit`}
           className={({ isActive }) =>
             isActive ? "text-primary" : "hover:text-primary"
           }

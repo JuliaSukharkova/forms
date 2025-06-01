@@ -31,8 +31,8 @@ export const AnswerForm = ({
       <div className="flex flex-col w-full">
         <div className="px-4 py-2 flex flex-col items-start">
           <Input
-            value=""
-            placeholder={element.label}
+            value={element.label}
+            placeholder="Enter question"
             onChange={(e) => onChange({ label: e.target.value })}
             className={cn(
               requiredField && !element.label.trim() && "border-destructive"

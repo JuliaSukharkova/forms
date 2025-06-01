@@ -1,46 +1,89 @@
-import { saveFormToSupabase } from "@/api/saveDataForm";
+import { checkFormData } from "@/api/checkFormData";
+import { createFormToSupabase } from "@/api/createDataForm";
+import { updateForm } from "@/api/updateForm";
 import { BackButton } from "@/components/BackButton";
+import { Loaders } from "@/components/Loaders";
 import { FormBuilder } from "@/components/NewForm/FormBuilder";
 import { FormName } from "@/components/NewForm/FormName";
 import { SidebarForm } from "@/components/NewForm/SidebarForm";
 import { Title } from "@/components/Title";
+import { secondsToTime } from "@/hooks/time";
 import { useAuthUser } from "@/hooks/useAuthUse";
 import type { FormElement, FormSettings } from "@/utils/types/type";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
-const NewFormPage = () => {
+const FormEditorPage = () => {
   const user = useAuthUser();
+  const { id: formId } = useParams<{ id: string }>();
   const [formElements, setFormElements] = useState<FormElement[]>([]);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [tag, setTag] = useState<string>("");
-  const [time, setTime] = useState<Date | null>(null);
+  const [time, setTime] = useState<string>("");
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
+  const [isFormExists, setIsFormExists] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
+
+  const fetchFormData = useCallback(async () => {
+    if (!formId) return;
+    try {
+      const data = await checkFormData(formId);
+      if (data) {
+        setName(data.name);
+        setDesc(data.description);
+        setTag(data.tag);
+        setFormElements(data.elements || []);
+        if (data.time_limit !== null && typeof data.time_limit === "number") {
+          setTime(secondsToTime(data.time_limit));
+        }
+        setIsFormExists(true);
+      }
+    } catch (error) {
+      console.error("Error loading form data", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [formId]);
+
+  useEffect(() => {
+    fetchFormData();
+  }, [fetchFormData]);
 
   const form: FormSettings = {
     name: name,
     description: desc,
-    ...(time && { timeLimit: time }),
-    ...(tag && { tag }),
+    tag,
     elements: formElements,
+    ...(time && { timeLimit: time }),
   };
+
   const handleSaveForm = async () => {
     setWasSubmitted(true);
     if (!name.trim() && !desc.trim() && formElements.length === 0) {
       return;
     }
+    if (!user || !formId) return;
     try {
-      if (!user) return null;
-      const userId = user.uid;
-      await saveFormToSupabase(userId, form);
+      if (isFormExists) {
+        await updateForm(formId, form);
+        toast.success("Form successfully updated");
+      } else {
+        const userId = user.uid;
+        await createFormToSupabase(userId, form, formId);
+        toast.success("Form successfully saved");
+        setIsFormExists(true);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setWasSubmitted(false);
     }
   };
+  if (isLoading) return <Loaders />;
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -54,6 +97,8 @@ const NewFormPage = () => {
             setTag={setTag}
             time={time}
             setTime={setTime}
+            updateForm={isFormExists}
+            formId={formId}
           />
           <div className="w-full flex flex-col gap-5">
             <FormName
@@ -61,6 +106,7 @@ const NewFormPage = () => {
               setName={setName}
               desc={desc}
               setDesc={setDesc}
+              updateForm={isFormExists}
               requiredField={wasSubmitted}
             />
             <FormBuilder
@@ -75,4 +121,4 @@ const NewFormPage = () => {
   );
 };
 
-export default NewFormPage;
+export default FormEditorPage;

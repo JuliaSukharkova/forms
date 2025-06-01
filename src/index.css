@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin 'tailwind-scrollbar';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -12,8 +13,18 @@ body {
   padding: 0;
 }
 
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: oklch(0.7555 0.1548 53.57);
+  border-radius: 4px;
+}
+
 @theme inline {
-  /* Кастомные переменные — расшифровка через var(--имя) */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -29,6 +40,8 @@ body {
   --color-primary: var(--primary);
   --color-primary-bright: var(--primary-bright);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -39,7 +52,9 @@ body {
   --color-destructive: var(--destructive);
   --color-destructive-light: var(--destructive-light);
   --color-destructive-bright: var(--destructive-bright);
+  --color-green: var(--green);
   --color-border: var(--border);
+  --color-border-light: var(--border-light);
   --color-input: var(--input);
   --color-ring: var(--ring);
 }
@@ -60,7 +75,9 @@ body {
 
   --primary: oklch(0.7555 0.1548 53.57);
   --primary-bright: oklch(0.7 0.1875 43.41);
-  --primary-foreground: oklch(1 0 0); /* Белый */
+  --primary-foreground: oklch(1 0 0);
+  --primary-dark: oklch(1 0 0);
+  --primary-light: oklch(0.9617 0.0223 56.47);
 
   --secondary: oklch(0.95 0 0);
   --secondary-foreground: oklch(0.2 0 0);
@@ -75,7 +92,12 @@ body {
   --destructive: oklch(0.65 0.22 27.32);
   --destructive-bright: oklch(0.9292 0.0358 24.19);
   --destructive-light: oklch(0.9708 0.0143 28.01);
+
+  --green: oklch(0.5676 0.2343 146.12);
+
   --border: oklch(0.9 0 0);
+  --border-light: oklch(0.6389 0.0949 53.11 / 20%);
+
   --input: oklch(0.9 0 0);
   --ring: oklch(0.65 0 0);
 }
@@ -92,10 +114,12 @@ body {
   --popover: oklch(0.2 0 0);
   --popover-foreground: oklch(0.98 0 0);
 
-  --primary: oklch(0.7555 0.1548 53.57); /* тот же оранжевый */
+  --primary: oklch(0.7555 0.1548 53.57);
   --primary-bright: oklch(0.75 0.2 43.41);
+  --primary-dark: oklch(0 0 0);
+  --primary-light: oklch(0.3798 0.0592 53.57);
 
-  --primary-foreground: oklch(1 0 0); /* белый */
+  --primary-foreground: oklch(1 0 0);
 
   --secondary: oklch(0.3 0 0);
   --secondary-foreground: oklch(0.98 0 0);
@@ -109,9 +133,13 @@ body {
 
   --destructive: oklch(0.7 0.2 25);
   --destructive-bright: oklch(0.2896 0.0587 19.76);
-  --destructive-light: oklch(0.1802 0.0724 20.68 / 52%);
+  --destructive-light: oklch(0.1802 0.0724 20.68 / 80%);
+
+  --green: oklch(0.5676 0.2343 146.12);
 
   --border: oklch(1 0 0 / 10%);
+  --border-light: oklch(0.724 0.0578 240.88 / 20.34%);
+
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.55 0 0);
 }
