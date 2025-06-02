@@ -5,7 +5,7 @@ import svgr from "vite-plugin-svgr";
 import path from "path";
 
 export default defineConfig({
-  base: '/Forms/',
+  base: '/',
   build: {
     rollupOptions: {
       output: {
