@@ -5,6 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 type SortLabelMap<T extends string> = Record<T, string>;
 
@@ -12,16 +13,27 @@ interface SortedMenuProps<T extends string> {
   value: T;
   onChange: (type: T) => void;
   sortLabel: SortLabelMap<T>;
+  className?: string;
+  isDisabled?: boolean;
 }
 
 export const SortedMenu = <T extends string>({
   value,
   onChange,
   sortLabel,
+  className,
+  isDisabled,
 }: SortedMenuProps<T>) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center justify-between gap-2 relative text-primary bg-primary/10 hover:bg-primary/20 px-5 py-1.5 rounded-md backdrop-blur-[4px] transition-shadow shadow cursor-pointer">
+      <DropdownMenuTrigger
+        disabled={isDisabled}
+        className={cn(
+          "focus:outline-none focus:ring-0 flex items-center justify-between gap-2 relative text-primary bg-primary/10 hover:bg-primary/20 px-5 py-1.5 rounded-md backdrop-blur-[4px] transition-shadow shadow cursor-pointer",
+          isDisabled && "cursor-not-allowed bg-transparent border border-primary hover:bg-transparent",
+          className
+        )}
+      >
         <span>{sortLabel[value]}</span>
         <ChevronDown className="w-4 h-4 stroke-primary" />
       </DropdownMenuTrigger>

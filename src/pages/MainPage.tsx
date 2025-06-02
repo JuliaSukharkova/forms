@@ -17,6 +17,7 @@ export const MainPage = () => {
   const [searchForm, setSearchForm] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<SortType>("new");
+
   const sortLabel = {
     new: "New first",
     old: "Old first",
@@ -81,6 +82,7 @@ export const MainPage = () => {
             value={sortOrder}
             onChange={setSortOrder}
             sortLabel={sortLabel}
+            isDisabled={filterForm.length === 0}
           />
         </div>
         {isSearching ? (

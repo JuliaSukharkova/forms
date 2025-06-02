@@ -1,8 +1,10 @@
 import { getFormById } from "@/api/getFormById";
 import { getResponsesForm } from "@/api/getResponsesForm";
 import { BackButton } from "@/components/BackButton";
+import { PieChartComponent } from "@/components/PieChart";
 import { SortedMenu } from "@/components/SortedMenu";
 import { Title } from "@/components/Title";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,7 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getChartData } from "@/hooks/getChartData";
 import { useAuthUser } from "@/hooks/useAuthUse";
+import { useExportToCSV } from "@/hooks/useExportToCSV";
 import { cn } from "@/lib/utils";
 import type { FormFromDB, ResponseElements } from "@/utils/types/type";
 import { ChartPie, TableIcon } from "lucide-react";
@@ -25,6 +29,8 @@ export const FormResponsesPage = () => {
   const [answers, setAnswers] = useState<ResponseElements[]>([]);
   const [isAnalitics, setIsAnanlitics] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<SortType>("new");
+  const exportToCSV = useExportToCSV();
+
   const sortLabel = {
     new: "New first",
     old: "Old first",
@@ -45,6 +51,35 @@ export const FormResponsesPage = () => {
     }
   });
   const allAnswers = sortedAnswers.map((item) => item.answers);
+
+  const handleExport = () => {
+    if (!form || !answers.length) return;
+
+    const headers = ["№", ...form.elements.map((el) => el.label), "created_at"];
+
+    const data = answers.map((response) => {
+      const row = [
+        response.formId,
+        ...form.elements.map((question) => {
+          const found = response.answers.find(
+            (a) => a.label === question.label
+          );
+          if (!found) return "";
+          return Array.isArray(found.value)
+            ? found.value.join(", ")
+            : found.value;
+        }),
+        new Date(response.created_at).toLocaleString(),
+      ];
+      return row;
+    });
+
+    exportToCSV({
+      filename: `${form.name || "form"}-responses.csv`,
+      headers,
+      data,
+    });
+  };
 
   useEffect(() => {
     const fetchForms = async () => {
@@ -69,7 +104,7 @@ export const FormResponsesPage = () => {
       <Title text="Responses" className="my-5" />
       <div className="relative w-full rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6 transition-shadow shadow-[var(--shadow)]">
         <div className="flex flex-col justify-center items-center gap-2.5 mb-2.5">
-          <h1 className="text-lg">{form.name}</h1>
+          <h1 className="text-lg text-primary font-medium">{form.name}</h1>
           <h2 className="text-center">{form.description}</h2>
         </div>
         <div className="flex flex-col gap-1 mb-2.5">
@@ -98,7 +133,7 @@ export const FormResponsesPage = () => {
               onClick={() => setIsAnanlitics(true)}
             >
               <ChartPie className="w-4 h-4" />
-              Settings
+              Analytics
             </button>
           </div>
           <div className="relative w-full h-0.5 bg-border rounded overflow-hidden">
@@ -110,13 +145,39 @@ export const FormResponsesPage = () => {
             />
           </div>
         </div>
-        <SortedMenu
-          value={sortOrder}
-          onChange={setSortOrder}
-          sortLabel={sortLabel}
-        />
+        <div className="flex justify-between">
+          <SortedMenu
+            value={sortOrder}
+            onChange={setSortOrder}
+            sortLabel={sortLabel}
+            isDisabled={allAnswers.length === 0}
+          />
+          <Button className="px-10 cursor-pointer" onClick={handleExport}>
+            Export CSV
+          </Button>
+        </div>
         <div className="rounded-md overflow-hidden border border-primary/20 mt-2.5">
-          {allAnswers.length > 1 ? (
+          {isAnalitics ? (
+            allAnswers.length > 0 ? (
+              <div className="flex flex-wrap justify-center gap-5 w-full">
+                {form.elements.map((question, i) => {
+                  const data = getChartData(question.label, answers);
+                  if (Object.keys(data).length === 0) return null;
+                  return (
+                    <PieChartComponent
+                      key={i}
+                      title={question.label}
+                      data={data}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="bg-accent/70 w-full p-4 text-center">
+                Analytics not found.
+              </div>
+            )
+          ) : allAnswers.length > 1 ? (
             <Table className="bg-accent/70 w-full">
               <TableHeader>
                 <TableRow>
