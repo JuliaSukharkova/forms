@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useState } from "react";
-import { CircleX, Eye, EyeOff } from "lucide-react";
+import { CircleX, Eye, EyeOff, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { passwordValidation } from "@/utils/validation/authValidation";
@@ -28,12 +28,14 @@ export const ProfilePassword = () => {
     reset,
     formState: { errors },
   } = useForm<PasswordData>();
-  const [isVisible, setIsVisible] = useState(false);
-  const [showCurrent, setShowCurrent] = useState(false);
-  const [showNew, setShowNew] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [showCurrent, setShowCurrent] = useState<boolean>(false);
+  const [showNew, setShowNew] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handlePasswordChange = async (user: User, data: PasswordData) => {
     try {
+      setIsLoading(true);
       const credential = EmailAuthProvider.credential(
         user.email!,
         data.currentPassword
@@ -49,6 +51,7 @@ export const ProfilePassword = () => {
       }
     } finally {
       reset();
+      setIsLoading(true);
     }
   };
 
@@ -127,7 +130,11 @@ export const ProfilePassword = () => {
             onClick={handleSubmit(onSubmit)}
             className="w-full mt-4 bg-primary hover:bg-primary/80 cursor-pointer"
           >
-            Save password
+            {isLoading ? (
+              <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
+            ) : (
+              "Save password"
+            )}
           </Button>
 
           <Button

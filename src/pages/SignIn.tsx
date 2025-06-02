@@ -13,6 +13,8 @@ import { auth } from "@/utils/firebase/firebase";
 import { FirebaseError } from "firebase/app";
 import type { FormData } from "@/utils/types/type";
 import { toast } from "sonner";
+import { useState } from "react";
+import { Loader } from "lucide-react";
 
 export default function SignIn() {
   const {
@@ -21,9 +23,11 @@ export default function SignIn() {
     formState: { errors },
   } = useForm<Pick<FormData, "email" | "password">>();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (data: Pick<FormData, "email" | "password">) => {
     try {
+      setIsLoading(true);
       await signInWithEmailAndPassword(auth, data.email, data.password);
       navigate("/");
     } catch (error: unknown) {
@@ -33,6 +37,8 @@ export default function SignIn() {
         toast.error("Unknown error:", { description: String(error) });
         console.error("Unknown error:", error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,7 +50,7 @@ export default function SignIn() {
           <div>
             <Label
               htmlFor="email"
-              className={cn(errors.email && "text-destructive")}
+              className={cn("mb-0.5", errors.email && "text-destructive")}
             >
               Email
             </Label>
@@ -66,7 +72,7 @@ export default function SignIn() {
           <div>
             <Label
               htmlFor="password"
-              className={cn(errors.password && "text-destructive")}
+              className={cn("mb-0.5", errors.password && "text-destructive")}
             >
               Password
             </Label>
@@ -84,15 +90,16 @@ export default function SignIn() {
               <p className="text-destructive mt-1">{errors.password.message}</p>
             )}
           </div>
-          <Button
-            type="submit"
-            className="w-full h-10 px-4 cursor-pointer"
-          >
-            Sign in
+          <Button type="submit" className="w-full h-10 px-4 cursor-pointer">
+            {isLoading ? (
+              <Loader className="w-5 h-5 fill-primary-foreground animate-spin"/>
+            ) : (
+              "Sign in"
+            )}
           </Button>
           <div className="text-right">
             <span>Don’t have an account? </span>
-            <Link to="/register" className="underline hover:text-accent">
+            <Link to="/register" className="underline hover:text-primary">
               Create account
             </Link>
           </div>

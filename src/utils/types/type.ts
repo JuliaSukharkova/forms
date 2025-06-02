@@ -90,5 +90,6 @@ export type Answers = Record<string, string | string[]>;
 
 export type ResponseElements = {
   created_at: Date;
-  answers: AnswerElement[]
-}
+  answers: AnswerElement[];
+  formId: string;
+};

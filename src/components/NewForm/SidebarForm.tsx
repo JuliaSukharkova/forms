@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { House, Save, Settings, Trash2 } from "lucide-react";
+import { House, Loader, Save, Settings, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -30,6 +30,7 @@ interface SidebarFormProps {
   setTime: React.Dispatch<React.SetStateAction<string>>;
   updateForm: boolean;
   formId?: string;
+  isLoading: boolean;
 }
 
 export const SidebarForm = ({
@@ -40,6 +41,7 @@ export const SidebarForm = ({
   setTime,
   updateForm,
   formId,
+  isLoading,
 }: SidebarFormProps) => {
   const [isSettings, setIsSettings] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -129,8 +131,14 @@ export const SidebarForm = ({
           </Button>
         )}
         <Button onClick={onSave} className="w-full cursor-pointer">
-          <Save className="w-4 h-4" />
-          Save form
+          {isLoading ? (
+            <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
+          ) : (
+            <>
+              <Save className="w-4 h-4" />
+              Save form
+            </>
+          )}
         </Button>
         {updateForm && (
           <AlertDialog>

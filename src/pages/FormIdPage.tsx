@@ -51,15 +51,13 @@ export const FormIdPage = () => {
     setIsSubmitting(true);
 
     try {
-      console.log("Sending form...");
       await saveAnswerForm(user.uid, form.id, answerElements);
-      console.log("Sent!");
       setIsSuccess(true);
     } catch (error) {
       console.log("Error sending answer form:", error);
     } finally {
       setIsSubmitting(false);
-    }
+    } 
   };
 
   return (

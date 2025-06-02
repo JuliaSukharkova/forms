@@ -18,6 +18,7 @@ import { useState } from "react";
 import { UserExistsDialog } from "@/components/Dialog/UserExistsDialog";
 import type { FormData } from "@/utils/types/type";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 export const SignUp = () => {
   const {
@@ -29,9 +30,11 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const password = watch("password");
   const [userExists, setUserExists] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onSubmit = async (data: FormData) => {
     try {
+      setIsLoading(true)
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -56,6 +59,8 @@ export const SignUp = () => {
       } else {
         console.error("Unknown error:", error);
       }
+    } finally{
+      setIsLoading(false)
     }
   };
 
@@ -65,7 +70,10 @@ export const SignUp = () => {
         <h2 className="text-2xl font-semibold mb-6">Create your account</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name" className={cn(errors.name && "text-destructive")}>
+            <Label
+              htmlFor="name"
+              className={cn(errors.name && "text-destructive")}
+            >
               Name
             </Label>
             <Input
@@ -101,7 +109,9 @@ export const SignUp = () => {
               )}
             />
             {errors.lastName && (
-              <p className="text-destructive  mt-1">{errors.lastName.message}</p>
+              <p className="text-destructive  mt-1">
+                {errors.lastName.message}
+              </p>
             )}
           </div>
 
@@ -145,7 +155,9 @@ export const SignUp = () => {
               )}
             />
             {errors.password && (
-              <p className="text-destructive  mt-1">{errors.password.message}</p>
+              <p className="text-destructive  mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -175,15 +187,16 @@ export const SignUp = () => {
               </p>
             )}
           </div>
-          <Button
-            type="submit"
-            className="w-full h-10 px-4 cursor-pointer"
-          >
-            Create account
+          <Button type="submit" className="w-full h-10 px-4 cursor-pointer">
+            {isLoading ? (
+              <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
+            ) : (
+              "Create account"
+            )}
           </Button>
           <div className=" text-right">
             <span>Already have an account? </span>
-            <Link to="/signin" className="underline hover:text-accent">
+            <Link to="/signin" className="underline hover:text-primary">
               Sign in
             </Link>
           </div>

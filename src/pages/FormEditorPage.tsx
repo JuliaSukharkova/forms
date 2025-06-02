@@ -99,6 +99,7 @@ const FormEditorPage = () => {
             setTime={setTime}
             updateForm={isFormExists}
             formId={formId}
+            isLoading={isLoading}
           />
           <div className="w-full flex flex-col gap-5">
             <FormName
