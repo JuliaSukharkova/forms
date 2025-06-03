@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { MainPage } from "./pages/MainPage";
@@ -11,7 +11,7 @@ import { FormResponsesPage } from "./pages/FormResponsesPage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<MainPage />} />
@@ -24,7 +24,7 @@ function App() {
         <Route path="/register" element={<SignUp />} />
       </Routes>
       <Toaster position="bottom-right" richColors />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
