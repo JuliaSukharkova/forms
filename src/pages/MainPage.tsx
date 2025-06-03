@@ -17,6 +17,7 @@ export const MainPage = () => {
   const [searchForm, setSearchForm] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<SortType>("new");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sortLabel = {
     new: "New first",
@@ -58,10 +59,13 @@ export const MainPage = () => {
     const fetchForms = async () => {
       try {
         if (!user) return;
+        setIsLoading(true);
         const data = await getUserForms(user.uid);
         setFormElements(data);
       } catch (error) {
         console.error("Error getting form:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchForms();
@@ -86,6 +90,10 @@ export const MainPage = () => {
           />
         </div>
         {isSearching ? (
+          <div className="flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin my-5" />
+          </div>
+        ) : isLoading ? (
           <div className="flex items-center justify-center">
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin my-5" />
           </div>

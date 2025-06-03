@@ -18,7 +18,7 @@ import { Input } from "../ui/input";
 import type { FormData } from "@/utils/types/type";
 import { toast } from "sonner";
 
-const DEFAULT_AVATAR = "/avatar.png";
+const DEFAULT_AVATAR = "/forms/avatar.png";
 
 export const ProfileFormChange = () => {
   const user = useAuthUser();
