@@ -1,4 +1,4 @@
-import { timeLimitSeconds } from "@/hooks/time";
+import { timeLimitSeconds } from "@/hooks/useTime";
 import { supabase } from "@/lib/supabase";
 import type { FormSettings } from "@/utils/types/type";
 
@@ -8,7 +8,7 @@ export const createFormToSupabase = async (
   formId: string
 ) => {
   const { name, description, tag, timeLimit, elements } = form;
-  const time = timeLimit ? timeLimitSeconds(timeLimit) : 0;;
+  const time = timeLimit ? timeLimitSeconds(timeLimit) : 0;
 
   const { error, data } = await supabase
     .from("forms")

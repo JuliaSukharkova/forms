@@ -1,4 +1,4 @@
-import { secondsToTime } from "@/hooks/time";
+import { secondsToTime } from "@/hooks/useTime";
 import { useEffect, useState } from "react";
 
 type TimerProps = {
@@ -14,12 +14,12 @@ export const Timer = ({ timeLimit, onTimeEnd }: TimerProps) => {
       onTimeEnd();
     }
   }, [onTimeEnd, secondsLeft]);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSecondsLeft((prev) => prev - 1);
     }, 1000);
-  
+
     return () => clearInterval(interval);
   }, []);
 

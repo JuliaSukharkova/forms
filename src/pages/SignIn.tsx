@@ -44,7 +44,7 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-[420px] p-10 border rounded-xl backdrop-blur-[4px] bg-muted transition-shadow shadow-[var(--shadow)]">
+      <div className="w-[420px] p-10 border border-primary-light rounded-xl backdrop-blur-[4px] bg-muted/40 transition-shadow shadow-[var(--shadow)]">
         <h2 className="text-xl font-semibold mb-6">Sign in to your account</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -60,7 +60,7 @@ export default function SignIn() {
               placeholder="Email"
               {...register("email", emailValidation)}
               className={cn(
-                "h-10 px-4 mt-0.5",
+                "h-10 px-4 mt-0.5 bg-muted",
                 errors.email && "border-destructive"
               )}
             />
@@ -82,7 +82,7 @@ export default function SignIn() {
               placeholder="••••••••"
               {...register("password", passwordValidation)}
               className={cn(
-                "h-10 px-4 mt-0.5",
+                "h-10 px-4 mt-0.5 bg-muted",
                 errors.password && "border-destructive"
               )}
             />

@@ -96,7 +96,7 @@ export const FormBuilder = ({
       id="form-builder"
       ref={ref}
       className={cn(
-        "min-h-56 flex flex-col gap-4 rounded-xl border border-dashed border-border backdrop-blur-[4px] bg-muted p-6 transition-shadow shadow-[var(--shadow)]",
+        "min-h-56 flex flex-col gap-4 rounded-xl border border-dashed border-primary/50 backdrop-blur-[4px] bg-muted/40 p-6 transition-shadow shadow-[var(--shadow)]",
         requiredField && formElements.length === 0 && "border-destructive justify-center items-center"
       )}
     >

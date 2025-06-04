@@ -35,6 +35,7 @@ export const AnswerForm = ({
             placeholder="Enter question"
             onChange={(e) => onChange({ label: e.target.value })}
             className={cn(
+              "bg-muted",
               requiredField && !element.label.trim() && "border-destructive"
             )}
             required

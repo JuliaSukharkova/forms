@@ -65,7 +65,7 @@ export const ProfilePassword = () => {
   };
 
   return (
-    <div className="flex-col rounded-xl border border-border backdrop-blur-[4px] bg-muted p-6  transition-shadow shadow-[var(--shadow)] space-y-4">
+    <div className="flex-col rounded-xl border border-primary-light backdrop-blur-[4px] bg-muted/40 p-6 w-full  transition-shadow shadow-[var(--shadow)] space-y-4">
       <h1
         onClick={() => setIsVisible((prev) => !prev)}
         className="flex justify-center items-center text-lg font-medium text-foreground cursor-pointer hover:text-primary"
@@ -85,7 +85,7 @@ export const ProfilePassword = () => {
                   required: "Enter current password",
                 })}
                 className={cn(
-                  "h-10 px-4",
+                  "h-10 px-4 bg-muted",
                   errors.currentPassword && "border-destructive"
                 )}
               />
@@ -109,7 +109,7 @@ export const ProfilePassword = () => {
                 placeholder="New password"
                 {...register("newPassword", passwordValidation)}
                 className={cn(
-                  "h-10 px-4",
+                  "h-10 px-4 bg-muted",
                   errors.newPassword && "border-destructive"
                 )}
               />

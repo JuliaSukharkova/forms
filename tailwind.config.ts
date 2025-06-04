@@ -1,12 +1,15 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class", '[data-theme="dark"]'],
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
     extend: {
       boxShadow: {
-        custom: 'var(--shadow)',
+        custom: "var(--shadow)",
+      },
+      screen: {
+        xs: "320px",
       },
       borderRadius: {
         sm: "calc(var(--radius) - 4px)",
@@ -16,7 +19,7 @@ const config: Config = {
       },
       colors: {
         border: "var(--color-border)",
-       "light": "var(--color-border-light)",
+        light: "var(--color-border-light)",
         input: "var(--color-input)",
         ring: "var(--color-ring)",
         background: "var(--color-background)",
@@ -26,6 +29,7 @@ const config: Config = {
         "primary-foreground": "var(--color-primary-foreground)",
         "primary-dark": "var(--color-primary-dark)",
         "primary-light": "var(--color-primary-light)",
+        "primary-text": "var(--color-primary-text)",
         secondary: "var(--color-secondary)",
         "secondary-foreground": "var(--color-secondary-foreground)",
         muted: "var(--color-muted)",

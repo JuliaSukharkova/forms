@@ -7,7 +7,7 @@ import { FormBuilder } from "@/components/NewForm/FormBuilder";
 import { FormName } from "@/components/NewForm/FormName";
 import { SidebarForm } from "@/components/NewForm/SidebarForm";
 import { Title } from "@/components/Title";
-import { secondsToTime } from "@/hooks/time";
+import { secondsToTime } from "@/hooks/useTime";
 import { useAuthUser } from "@/hooks/useAuthUse";
 import type { FormElement, FormSettings } from "@/utils/types/type";
 import { useCallback, useEffect, useState } from "react";
@@ -26,7 +26,8 @@ const FormEditorPage = () => {
   const [time, setTime] = useState<string>("");
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
   const [isFormExists, setIsFormExists] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true); 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const fetchFormData = useCallback(async () => {
     if (!formId) return;
@@ -83,13 +84,35 @@ const FormEditorPage = () => {
       setWasSubmitted(false);
     }
   };
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 600);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center text-center">
+        <p className="text-lg font-medium">
+          The constructor is not available on mobile devices.
+        </p>
+      </div>
+    );
+  }
+
   if (isLoading) return <Loaders />;
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="m-5">
         <BackButton />
-        <Title text="Create form" className="my-5" />
+        <Title text="Create form" className="my-5 text-primary-text" />
         <div className="flex items-start gap-5 w-full">
           <SidebarForm
             onSave={handleSaveForm}

@@ -4,7 +4,7 @@ import { SuccessMessage } from "@/components/FormId/SuccessMessage";
 import { Timer } from "@/components/FormId/Timer";
 import { TimeWarning } from "@/components/FormId/TimeWarning";
 import { Loaders } from "@/components/Loaders";
-import { secondsToTime } from "@/hooks/time";
+import { secondsToTime } from "@/hooks/useTime";
 import { useAuthUser } from "@/hooks/useAuthUse";
 import { useFormData } from "@/hooks/useFormData";
 import type { AnswerElement, Answers, FormFromDB } from "@/utils/types/type";
@@ -57,12 +57,12 @@ export const FormIdPage = () => {
       console.log("Error sending answer form:", error);
     } finally {
       setIsSubmitting(false);
-    } 
+    }
   };
 
   return (
     <div className="flex items-start w-full m-5 h-auto">
-      <div className="rounded-md p-10 relative w-full backdrop-blur shadow border">
+      <div className="rounded-md p-10 relative w-full backdrop-blur-[4px] bg-muted/40 shadow border">
         {isSuccess ? (
           <SuccessMessage />
         ) : isTimeLimit && time ? (

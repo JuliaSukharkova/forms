@@ -39,7 +39,9 @@ export const MultipleList = ({
 }: IFormProps) => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<"single" | "multiple">(element.dataType);
-  const [options, setOptions] = useState<string[]>(element.options ? element.options : []);
+  const [options, setOptions] = useState<string[]>(
+    element.options ? element.options : []
+  );
 
   const handleAddOption = () => {
     setOptions([...options, ""]);
@@ -64,6 +66,7 @@ export const MultipleList = ({
             placeholder="Enter question"
             onChange={(e) => onChange({ label: e.target.value })}
             className={cn(
+              "bg-muted",
               requiredField && !element.label.trim() && "border-destructive"
             )}
             required

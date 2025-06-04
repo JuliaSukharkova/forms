@@ -99,7 +99,7 @@ export const ProfileFormChange = () => {
   if (!user) return <Loaders />;
 
   return (
-    <div className="flex-col backdrop-blur-[4px] bg-muted border border-border rounded-md  transition-shadow shadow-[var(--shadow)] p-5 gap-6">
+    <div className="w-full flex-col backdrop-blur-[4px] bg-muted/40 border border-primary-light rounded-md  transition-shadow shadow-[var(--shadow)] p-5 gap-6">
       <ProfileAvatarUploader
         photo={photo}
         onUploadClick={() => fileInputRef.current?.click()}
@@ -124,7 +124,7 @@ export const ProfileFormChange = () => {
               id="name"
               {...register("name", nameValidation)}
               className={cn(
-                "h-10 pr-4 pl-8",
+                "h-10 pr-4 pl-8 bg-muted",
                 errors.name && "border-destructive"
               )}
             />
@@ -147,7 +147,7 @@ export const ProfileFormChange = () => {
               id="lastName"
               {...register("lastName", lastNameValidation)}
               className={cn(
-                "h-10 pr-4 pl-8",
+                "h-10 pr-4 pl-8 bg-muted",
                 errors.lastName && "border-destructive"
               )}
             />

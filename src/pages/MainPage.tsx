@@ -73,9 +73,9 @@ export const MainPage = () => {
 
   return (
     <div className="m-5">
-      <Title text="My forms" className="my-5" />
-      <div className="relative w-full rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6 transition-shadow shadow-[var(--shadow)]">
-        <div className="flex justify-between">
+      <Title text="My forms" className="my-5 text-primary-text" />
+      <div className="relative w-full rounded-xl border border-primary-light backdrop-blur-[4px] bg-muted/40 p-5 transition-shadow shadow-[var(--shadow)]">
+        <div className="flex justify-between gap-1.5">
           <SearchInput
             searchForm={searchForm}
             setSearchForm={setSearchForm}
@@ -98,7 +98,7 @@ export const MainPage = () => {
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin my-5" />
           </div>
         ) : filterForm.length > 0 ? (
-          <div className="flex flex-wrap justify-start gap-4 my-4">
+          <div className="flex flex-wrap justify-start gap-4 mt-5">
             {filterForm.map((el, index) => (
               <FormList
                 key={index}

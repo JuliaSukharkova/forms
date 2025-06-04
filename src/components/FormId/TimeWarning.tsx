@@ -1,11 +1,11 @@
-import { formatTimeString } from "@/hooks/time";
+import { formatTimeString } from "@/hooks/useTime";
 import { Button } from "../ui/button";
 
 export const TimeWarning = ({
   time,
   onStart,
 }: {
-  time: string ;
+  time: string;
   onStart: () => void;
 }) => (
   <div className="flex flex-col justify-center items-center gap-3">

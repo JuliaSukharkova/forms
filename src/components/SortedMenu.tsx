@@ -29,7 +29,7 @@ export const SortedMenu = <T extends string>({
       <DropdownMenuTrigger
         disabled={isDisabled}
         className={cn(
-          "focus:outline-none focus:ring-0 flex items-center justify-between gap-2 relative text-primary bg-primary/10 hover:bg-primary/20 px-5 py-1.5 rounded-md backdrop-blur-[4px] transition-shadow shadow cursor-pointer",
+          "focus:outline-none focus:ring-0 flex items-center justify-between gap-2 relative text-primary bg-primary/10 hover:bg-primary/20 px-5 py-1.5 max-sm:px-2 max-sm:py-1 rounded-md backdrop-blur-[4px] transition-shadow shadow cursor-pointer",
           isDisabled && "cursor-not-allowed bg-transparent border border-primary hover:bg-transparent",
           className
         )}

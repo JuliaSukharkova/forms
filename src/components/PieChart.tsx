@@ -44,8 +44,40 @@ export const PieChartComponent = ({ title, data }: PieChartProps) => {
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
-          <Legend  />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const { name, value } = payload[0];
+                return (
+                  <div className="bg-card border border-border rounded-md p-2 shadow-sm text-sm h-8 overflow-hidden">
+                    <strong>{name}</strong>: {value}
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
+          <Legend
+            verticalAlign="bottom"
+            height={20}
+            content={({ payload }) => (
+              <div className="flex flex-wrap gap-x-2 justify-center text-sm truncate">
+                {payload &&
+                  payload.map((entry, index) => (
+                    <span
+                      key={`item-${index}`}
+                      className="truncate max-w-[100px]"
+                    >
+                      <span
+                        className="inline-block w-3 h-3 rounded-sm mr-1"
+                        style={{ backgroundColor: entry.color }}
+                      />
+                      {entry.value}
+                    </span>
+                  ))}
+              </div>
+            )}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>

@@ -71,7 +71,7 @@ export const FormContent = ({
                         placeholder="Enter answer"
                         value={getAnswerAsString(el.id)}
                         className={cn(
-                          "w-full",
+                          "w-full bg-muted",
                           errors[el.id] && "border-destructive"
                         )}
                         onChange={(e) => {
@@ -92,7 +92,7 @@ export const FormContent = ({
                     <>
                       <Textarea
                         className={cn(
-                          "w-full",
+                          "w-full bg-muted",
                           errors[el.id] && "border-destructive"
                         )}
                         placeholder="Enter answer"

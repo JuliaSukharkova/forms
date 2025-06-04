@@ -101,8 +101,8 @@ export const FormResponsesPage = () => {
   return (
     <div className="m-5">
       <BackButton />
-      <Title text="Responses" className="my-5" />
-      <div className="relative w-full rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6 transition-shadow shadow-[var(--shadow)]">
+      <Title text="Responses" className="my-5 text-primary-text" />
+      <div className="relative w-full rounded-xl border border-primary-light backdrop-blur-[4px] bg-muted/40 p-6 transition-shadow shadow-[var(--shadow)]">
         <div className="flex flex-col justify-center items-center gap-2.5 mb-2.5">
           <h1 className="text-lg text-primary font-medium">{form.name}</h1>
           <h2 className="text-center">{form.description}</h2>
@@ -177,7 +177,7 @@ export const FormResponsesPage = () => {
                 Analytics not found.
               </div>
             )
-          ) : allAnswers.length > 1 ? (
+          ) : allAnswers.length > 0 ? (
             <Table className="bg-accent/70 w-full">
               <TableHeader>
                 <TableRow>
@@ -207,7 +207,7 @@ export const FormResponsesPage = () => {
                       return (
                         <TableCell
                           key={colIndex}
-                          className="text-center border-r border-border last:border-0"
+                          className="text-center border-r border-border last:border-0 whitespace-pre-wrap break-words"
                         >
                           {answer &&
                           Array.isArray(answer.value) &&
