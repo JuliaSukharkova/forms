@@ -11,7 +11,14 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ["react", "react-dom"],
-          shadcn: ["@radix-ui/react-popover", "lucide-react"],
+          shadcn: ["lucide-react"],
+          radix: [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tooltip',
+          ],
         },
       },
     },

@@ -16,15 +16,11 @@ import {
   SquarePen,
   Text,
 } from "lucide-react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-} from "@radix-ui/react-popover";
 import { useDrop } from "react-dnd";
 import { DraggableFormItem } from "./DraggableFormItem";
 import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { PopoverArrow } from "@radix-ui/react-popover";
 
 export const FormBuilder = ({
   formElements,

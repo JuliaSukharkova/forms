@@ -2,12 +2,12 @@ import type { Answers, FormFromDB } from "@/utils/types/type";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import { Separator } from "@radix-ui/react-separator";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
+import { Separator } from "../ui/separator";
 
 type Props = {
   form: FormFromDB | null;
@@ -188,7 +188,7 @@ export const FormContent = ({
             return null;
           })}
       </form>
-      <Separator className="border-border" />
+      <Separator />
       <div className="flex gap-5 justify-start items-start w-full">
         <Button
           disabled={!isFormValid}

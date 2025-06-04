@@ -7,7 +7,6 @@ import {
   lastNameValidation,
 } from "@/utils/validation/authValidation";
 import { formatDate } from "@/utils/validation/fomatDate";
-import { Label } from "@radix-ui/react-label";
 import { Mail, CalendarDays, CircleX, User } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -17,6 +16,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import type { FormData } from "@/utils/types/type";
 import { toast } from "sonner";
+import { Label } from "../ui/label";
 
 const DEFAULT_AVATAR = "/forms/avatar.png";
 
@@ -128,7 +128,7 @@ export const ProfileFormChange = () => {
                 errors.name && "border-destructive"
               )}
             />
-            <div className="absolute top-[35px] left-[10px]">
+            <div className="absolute top-[30px] left-[10px]">
               <User className="w-4 h-4 fill-accent-foreground stroke-accent-foreground" />
             </div>
             {errors.name && (
@@ -136,7 +136,7 @@ export const ProfileFormChange = () => {
             )}
           </div>
 
-          <div className="relative flex flex-col   mb-3.5 gap-0.5">
+          <div className="relative flex flex-col  mb-3.5 gap-0.5">
             <Label
               htmlFor="lastName"
               className={cn(errors.lastName && "text-destructive")}
@@ -151,7 +151,7 @@ export const ProfileFormChange = () => {
                 errors.lastName && "border-destructive"
               )}
             />
-            <div className="absolute top-[35px] left-[10px]">
+            <div className="absolute top-[30px] left-[10px]">
               <User className="w-4 h-4 fill-accent-foreground stroke-accent-foreground" />
             </div>
             {errors.lastName && (
