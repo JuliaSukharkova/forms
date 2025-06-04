@@ -38,6 +38,7 @@ export const MultipleList = ({
   requiredField,
 }: IFormProps) => {
   const [open, setOpen] = useState(false);
+  const [openChoice, setOpenChoice] = useState(false);
   const [type, setType] = useState<"single" | "multiple">(element.dataType);
   const [options, setOptions] = useState<string[]>(
     element.options ? element.options : []
@@ -55,6 +56,8 @@ export const MultipleList = ({
 
   const toggleType = (newType: "single" | "multiple") => {
     setType(newType);
+    element.dataType = newType;
+    setOpenChoice(false);
   };
 
   return (
@@ -117,8 +120,7 @@ export const MultipleList = ({
               Add
             </button>
           </div>
-
-          <Popover>
+          <Popover open={openChoice} onOpenChange={setOpenChoice}>
             <PopoverTrigger asChild>
               <button className="relative flex items-center py-1.5 xl:px-10 lg:px-10 md:px-7 xs:px-2 gap-2 text-primary backdrop-blur-[4px] bg-primary/10 hover:backdrop-blur-[4px] shadow rounded-md cursor-pointer">
                 <span>
@@ -151,9 +153,7 @@ export const MultipleList = ({
             </PopoverContent>
           </Popover>
         </div>
-
         <Separator />
-
         <div className="flex justify-between px-4 py-2">
           {type === "single" ? (
             <p className="flex items-center gap-1.5">
