@@ -1,39 +1,45 @@
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import type { FormElement } from "@/utils/types/type";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import React from "react";
 
 interface DraggableFormItemProps {
-  index: number;
-  moveItem: (fromIndex: number, toIndex: number) => void;
-  children: React.ReactNode;
+  id: string;
+  element: FormElement;
+  children: (props: {
+    dragHandleProps: React.HTMLAttributes<HTMLElement>;
+  }) => React.ReactNode;
 }
 
-export const DraggableFormItem = ({
-  index,
-  moveItem,
+export const DraggableFormItem: React.FC<DraggableFormItemProps> = ({
+  id,
+  element,
   children,
-}: DraggableFormItemProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const [, drop] = useDrop({
-    accept: 'SORTABLE_FORM_ELEMENT',
-    hover: (draggedItem: { index: number }) => {
-      if (draggedItem.index !== index) {
-        moveItem(draggedItem.index, index);
-        draggedItem.index = index;
-      }
+}) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id,
+    data: {
+      ...element,
+      fromSidebar: false,
     },
   });
 
-  const [, drag] = useDrag({
-    type: "SORTABLE_FORM_ELEMENT",
-    item: { index },
-  });
-
-  drag(drop(ref));
+  const style = {
+    opacity: isDragging ? 0.2 : 1,
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   return (
-    <div ref={ref}  className="relative w-full group transition-all duration-200">
-      {children}
+    <div ref={setNodeRef} style={style}>
+      {children({ dragHandleProps: { ...attributes, ...listeners } })}
     </div>
   );
 };

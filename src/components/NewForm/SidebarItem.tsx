@@ -1,19 +1,18 @@
-import { cn } from "@/lib/utils";
+import { useDraggable } from "@dnd-kit/core";
 import type { SidebarItemType } from "@/utils/types/type";
 import { BookPlus, CircleCheck, SquarePen, Text } from "lucide-react";
-import { useRef } from "react";
-import { useDrag } from "react-dnd";
 
 export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: 'FORM_ELEMENT',
-    item,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-  dragRef(ref);
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: item.id,
+    data: {
+      id: item.id,
+      type: item.type,
+      data: item.data,
+      fromSidebar: true,
+    },
+  });
+
   let icon;
   let label;
 
@@ -43,11 +42,12 @@ export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
   if (!item) return null;
   return (
     <div
-      ref={ref}
-      className={cn(
-        "cursor-pointer flex items-center gap-2",
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      className={`cursor-pointer flex items-center gap-1 ${
         isDragging ? "opacity-50" : ""
-      )}
+      }`}
     >
       {icon}
       {label}

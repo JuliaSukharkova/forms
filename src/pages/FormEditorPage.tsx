@@ -9,12 +9,18 @@ import { SidebarForm } from "@/components/NewForm/SidebarForm";
 import { Title } from "@/components/Title";
 import { secondsToTime } from "@/hooks/useTime";
 import { useAuthUser } from "@/hooks/useAuthUse";
-import type { FormElement, FormSettings } from "@/utils/types/type";
+import type {
+  FormElement,
+  FormSettings,
+  SidebarItemType,
+} from "@/utils/types/type";
 import { useCallback, useEffect, useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { SidebarItem } from "@/components/NewForm/SidebarItem";
+import { AnswerForm } from "@/components/NewForm/AnswerForm";
+import { MultipleList } from "@/components/NewForm/MultipleList";
 
 const FormEditorPage = () => {
   const user = useAuthUser();
@@ -28,6 +34,9 @@ const FormEditorPage = () => {
   const [isFormExists, setIsFormExists] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [draggedItem, setDraggedItem] = useState<
+    FormElement | SidebarItemType | null
+  >(null);
 
   const fetchFormData = useCallback(async () => {
     if (!formId) return;
@@ -109,7 +118,31 @@ const FormEditorPage = () => {
   if (isLoading) return <Loaders />;
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndContext
+      onDragStart={(event) => {
+        const data = event.active.data.current;
+        if (!data) return;
+        if (data.fromSidebar) {
+          setDraggedItem({
+            id: data.id,
+            type: data.type,
+            data: data.data,
+            fromSidebar: true,
+          } as SidebarItemType);
+        } else {
+          setDraggedItem({
+            id: data.id,
+            label: data.label,
+            required: data.required,
+            component: data.component,
+            dataType: data.dataType,
+            options: data.options ?? [],
+          } as FormElement);
+        }
+      }}
+      onDragEnd={() => setDraggedItem(null)}
+      onDragCancel={() => setDraggedItem(null)}
+    >
       <div className="m-5">
         <BackButton />
         <Title text="Create form" className="my-5 text-primary-text" />
@@ -141,7 +174,30 @@ const FormEditorPage = () => {
           </div>
         </div>
       </div>
-    </DndProvider>
+      <DragOverlay>
+        {draggedItem &&
+          ("fromSidebar" in draggedItem ? (
+            <SidebarItem item={draggedItem as SidebarItemType} />
+          ) : (
+            (() => {
+              const formItem = draggedItem as FormElement;
+              return formItem.component === "answer" ? (
+                <AnswerForm
+                  element={formItem}
+                  requiredField={false}
+                  dragHandleProps={{}} // можно передать noop или просто пустой объект
+                />
+              ) : (
+                <MultipleList
+                  element={formItem}
+                  requiredField={false}
+                  dragHandleProps={{}}
+                />
+              );
+            })()
+          ))}
+      </DragOverlay>
+    </DndContext>
   );
 };
 

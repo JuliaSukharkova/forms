@@ -27,7 +27,7 @@ const ProfileAvatarUploader = ({
   <div className="relative flex items-center justify-center">
     <div className="relative w-40 h-40">
       <img
-        className="rounded-full object-cover w-full h-full"
+        className="rounded-full object-cover w-full h-full shadow"
         src={photo}
         alt="User avatar"
       />

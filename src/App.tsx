@@ -11,7 +11,10 @@ import { FormResponsesPage } from "./pages/FormResponsesPage";
 
 function App() {
   return (
-    <HashRouter>
+    <HashRouter future={{
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    }}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<MainPage />} />

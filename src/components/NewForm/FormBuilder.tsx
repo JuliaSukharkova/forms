@@ -2,9 +2,11 @@ import type {
   DataType,
   FieldType,
   FormElement,
-  SidebarItemType,
 } from "@/utils/types/type";
-import { useRef, useState } from "react";
+import {
+  useCallback,
+  useState,
+} from "react";
 import { AnswerForm } from "./AnswerForm";
 import { MultipleList } from "./MultipleList";
 import { nanoid } from "nanoid";
@@ -16,11 +18,16 @@ import {
   SquarePen,
   Text,
 } from "lucide-react";
-import { useDrop } from "react-dnd";
-import { DraggableFormItem } from "./DraggableFormItem";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { PopoverArrow } from "@radix-ui/react-popover";
+import { useDroppable, useDndMonitor } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { DraggableFormItem } from "./DraggableFormItem";
 
 export const FormBuilder = ({
   formElements,
@@ -31,15 +38,38 @@ export const FormBuilder = ({
   setFormElements: React.Dispatch<React.SetStateAction<FormElement[]>>;
   requiredField: boolean;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [, dropRef] = useDrop({
-    accept: "FORM_ELEMENT",
-    drop: (item: SidebarItemType) => {
-      handleAddForm(item.type as FieldType, item.data as DataType);
+  const { setNodeRef } = useDroppable({ id: "form-dropzone" });
+
+  useDndMonitor({
+    onDragEnd(event) {
+      const { active, over } = event;
+      if (!active || !over) return;
+
+      const activeId = active.id as string;
+      const overId = over.id as string;
+
+      const activeIndex = formElements.findIndex((el) => el.id === activeId);
+      const overIndex = formElements.findIndex((el) => el.id === overId);
+
+      if (active.data?.current?.fromSidebar) {
+        const newElement: FormElement = {
+          id: nanoid(),
+          label: "",
+          required: false,
+          component: active.data.current.type as FieldType,
+          dataType: active.data.current.data as DataType,
+          options: active.data.current.type === "multipleList" ? [""] : [],
+        };
+        setFormElements((prev) => [...prev, newElement]);
+        return;
+      }
+
+      if (activeIndex !== -1 && overIndex !== -1 && activeIndex !== overIndex) {
+        setFormElements((prev) => arrayMove(prev, activeIndex, overIndex));
+      }
     },
   });
-  dropRef(ref);
 
   const handleAddForm = (component: FieldType, type: DataType) => {
     const newElement: FormElement = {
@@ -48,13 +78,16 @@ export const FormBuilder = ({
       required: false,
       component: component,
       dataType: type,
-      options: component === "multipleList" ? [] : [],
+      options: component === "multipleList" ? [""] : [],
     };
     setFormElements((prev) => [...prev, newElement]);
   };
-  const handleDelete = (id: string) => {
-    setFormElements((prev) => prev.filter((el) => el.id !== id));
-  };
+  const handleDelete = useCallback(
+    (id: string) => {
+      setFormElements((prev) => prev.filter((el) => el.id !== id));
+    },
+    [setFormElements]
+  );
 
   const handleCopyBelow = (id: string) => {
     const idx = formElements.findIndex((el) => el.id === id);
@@ -73,14 +106,7 @@ export const FormBuilder = ({
       setFormElements((prev) => [...prev, copy]);
     }
   };
-  const moveItem = (from: number, to: number) => {
-    setFormElements((prev) => {
-      const updated = [...prev];
-      const [moved] = updated.splice(from, 1);
-      updated.splice(to, 0, moved);
-      return updated;
-    });
-  };
+
   const handleUpdate = (id: string, updatedFields: Partial<FormElement>) => {
     setFormElements((prev) =>
       prev.map((el) => (el.id === id ? { ...el, ...updatedFields } : el))
@@ -90,10 +116,12 @@ export const FormBuilder = ({
   return (
     <div
       id="form-builder"
-      ref={ref}
+      ref={setNodeRef}
       className={cn(
-        "min-h-56 flex flex-col gap-4 rounded-xl border border-dashed border-primary/50 backdrop-blur-[4px] bg-muted/40 p-6 transition-shadow shadow-[var(--shadow)]",
-        requiredField && formElements.length === 0 && "border-destructive justify-center items-center"
+        "min-h-56 flex flex-col gap-4 rounded-xl border border-dashed border-primary/50 bg-muted/40 p-6",
+        requiredField &&
+          formElements.length === 0 &&
+          "border-destructive justify-center items-center"
       )}
     >
       {requiredField && formElements.length === 0 && (
@@ -102,37 +130,42 @@ export const FormBuilder = ({
           <span className="text-destructive">Add at least 1 question.</span>
         </div>
       )}
-      {formElements.map((el, index) =>
-        el.component === "answer" ? (
-          <div key={el.id}>
-            <DraggableFormItem key={el.id} index={index} moveItem={moveItem}>
-              <AnswerForm
-                key={el.id}
-                element={el}
-                requiredField={requiredField}
-                onDelete={() => handleDelete(el.id)}
-                onCopyBelow={() => handleCopyBelow(el.id)}
-                onCopyToEnd={() => handleCopyToEnd(el.id)}
-                onChange={(updatedFields) => handleUpdate(el.id, updatedFields)}
-              />
-            </DraggableFormItem>
-          </div>
-        ) : (
-          <div key={el.id}>
-            <DraggableFormItem key={el.id} index={index} moveItem={moveItem}>
-              <MultipleList
-                key={el.id}
-                element={el}
-                requiredField={requiredField}
-                onDelete={() => handleDelete(el.id)}
-                onCopyBelow={() => handleCopyBelow(el.id)}
-                onCopyToEnd={() => handleCopyToEnd(el.id)}
-                onChange={(updatedFields) => handleUpdate(el.id, updatedFields)}
-              />
-            </DraggableFormItem>
-          </div>
-        )
-      )}
+      <SortableContext
+        items={formElements.map((el) => el.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        {formElements.map((el) => (
+          <DraggableFormItem key={el.id} id={el.id} element={el}>
+            {({ dragHandleProps }) =>
+              el.component === "answer" ? (
+                <AnswerForm
+                  element={el}
+                  requiredField={requiredField}
+                  onDelete={() => handleDelete(el.id)}
+                  onCopyBelow={() => handleCopyBelow(el.id)}
+                  onCopyToEnd={() => handleCopyToEnd(el.id)}
+                  onChange={(updatedFields) =>
+                    handleUpdate(el.id, updatedFields)
+                  }
+                  dragHandleProps={dragHandleProps}
+                />
+              ) : (
+                <MultipleList
+                  element={el}
+                  requiredField={requiredField}
+                  onDelete={() => handleDelete(el.id)}
+                  onCopyBelow={() => handleCopyBelow(el.id)}
+                  onCopyToEnd={() => handleCopyToEnd(el.id)}
+                  onChange={(updatedFields) =>
+                    handleUpdate(el.id, updatedFields)
+                  }
+                  dragHandleProps={dragHandleProps}
+                />
+              )
+            }
+          </DraggableFormItem>
+        ))}
+      </SortableContext>
       {formElements.length >= 1 && (
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger className="flex justify-center items-center" asChild>

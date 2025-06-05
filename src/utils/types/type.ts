@@ -1,5 +1,3 @@
-import { nanoid } from "nanoid";
-
 export type FormData = {
   email: string;
   password: string;
@@ -12,10 +10,11 @@ export interface IFormProps {
   element: FormElement;
   onDelete?: () => void;
   isPreview?: boolean;
-  onCopyBelow: () => void;
-  onCopyToEnd: () => void;
-  onChange: (updatedFields: Partial<FormElement>) => void;
+  onCopyBelow?: () => void;
+  onCopyToEnd?: () => void;
+  onChange?: (updatedFields: Partial<FormElement>) => void;
   requiredField: boolean;
+  dragHandleProps?: React.HTMLAttributes<HTMLElement>;
 }
 
 export type IChoiceForm = {
@@ -55,10 +54,10 @@ export type DroppedData =
     };
 
 export const sidebarItems: SidebarItemType[] = [
-  { id: nanoid(), type: "answer", data: "single" },
-  { id: nanoid(), type: "answer", data: "multiple" },
-  { id: nanoid(), type: "multipleList", data: "single" },
-  { id: nanoid(), type: "multipleList", data: "multiple" },
+  { id: "answer_single", type: "answer", data: "single" },
+  { id: "answer_multiple", type: "answer", data: "multiple" },
+  { id: "list_single", type: "multipleList", data: "single" },
+  { id: "list_multiple", type: "multipleList", data: "multiple" },
 ];
 
 export type FormSettings = {
