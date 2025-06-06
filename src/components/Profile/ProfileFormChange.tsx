@@ -1,22 +1,22 @@
 import { uploadAvatartToStorage } from "@/hooks/uploadAvatarToStorage";
-import { useAuthUser } from "@/hooks/useAuthUse";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { updateUserProfile } from "@/hooks/useUpdateProfile";
-import { cn } from "@/lib/utils";
+import { cn } from "@/services/lib/utils";
 import {
   nameValidation,
   lastNameValidation,
-} from "@/utils/validation/authValidation";
-import { formatDate } from "@/utils/validation/fomatDate";
+} from "@/services/validation/authValidation";
+import { formatDate } from "@/services/validation/fomatDate";
 import { Mail, CalendarDays, CircleX, User } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import ProfileAvatarUploader from "../Avatar/ProfileAvatarUploader";
 import { Loaders } from "../Loaders";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import type { FormData } from "@/utils/types/type";
+import type { FormData } from "@/types/type";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
+import ProfileAvatarUploader from "./ProfileAvatarUploader";
 
 const DEFAULT_AVATAR = "/forms/avatar.png";
 

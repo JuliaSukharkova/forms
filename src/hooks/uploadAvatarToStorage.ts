@@ -1,4 +1,4 @@
-import { storage } from "@/utils/firebase/firebase";
+import { storage } from "@/services/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const uploadAvatartToStorage = async (file: File, uid: string) => {

@@ -2,7 +2,6 @@ import { MessagesSquare, Pencil, Trash2 } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { useEffect, useState, type FC } from "react";
 import { Link } from "react-router-dom";
-import { deleteFormById } from "@/api/deleteFormById";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,9 +13,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import type { FormFromDB } from "@/utils/types/type";
+import type { FormFromDB } from "@/types/type";
 import { toast } from "sonner";
-import { getAnswersCount } from "@/api/getAnswersForm";
+import { deleteFormById, getAnswersCount } from "@/api/formApi";
 
 interface IFormList {
   formName: string;
@@ -65,7 +64,10 @@ export const FormList: FC<IFormList> = ({
         <Separator className="w-full" />
         <div className="flex-1"></div>
         <div className="flex w-full p-2">
-          <Link to={`/form/${formId}/responses`} className="relative flex flex-1 justify-center p-2 rounded-md cursor-pointer hover:bg-accent">
+          <Link
+            to={`/form/${formId}/responses`}
+            className="relative flex flex-1 justify-center p-2 rounded-md cursor-pointer hover:bg-accent"
+          >
             <MessagesSquare className="w-4 h-4" />
             <p className="absolute top-0 right-7 flex items-center justify-center w-4 h-4 text-[10px] bg-destructive rounded-full text-primary-foreground">
               {answersCount}

@@ -1,5 +1,5 @@
-import { getFormById } from "@/api/getFormById";
-import type { FormFromDB } from "@/utils/types/type";
+import { getFormById } from "@/api/formApi";
+import type { FormFromDB } from "@/types/type";
 import type { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 

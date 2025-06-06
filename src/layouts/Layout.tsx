@@ -1,11 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { Loaders } from "@/components/Loaders";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 export const Layout = () => {
-  const user = useAuth();
+  const user = useAuthUser();
 
   if (user === undefined) return <Loaders />;
   if (!user) return <Navigate to="/signin" replace />;

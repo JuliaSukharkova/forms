@@ -1,9 +1,8 @@
 import { BackButton } from "@/components/BackButton";
-import { ProfileFormChange } from "@/components/Profile/ProfileFormChange";
-import { ProfilePassword } from "@/components/Profile/ProfilePasswordChange";
+import { ProfileFormChange, ProfilePassword } from "@/components/Profile";
 import { Title } from "@/components/Title";
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   return (
     <div className="m-5">
       <BackButton />
@@ -15,5 +14,3 @@ const ProfilePage = () => {
     </div>
   );
 };
-
-export default ProfilePage;

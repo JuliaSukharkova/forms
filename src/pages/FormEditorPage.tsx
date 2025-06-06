@@ -1,28 +1,24 @@
-import { checkFormData } from "@/api/checkFormData";
-import { createFormToSupabase } from "@/api/createDataForm";
-import { updateForm } from "@/api/updateForm";
 import { BackButton } from "@/components/BackButton";
 import { Loaders } from "@/components/Loaders";
-import { FormBuilder } from "@/components/NewForm/FormBuilder";
-import { FormName } from "@/components/NewForm/FormName";
-import { SidebarForm } from "@/components/NewForm/SidebarForm";
 import { Title } from "@/components/Title";
 import { secondsToTime } from "@/hooks/useTime";
-import { useAuthUser } from "@/hooks/useAuthUse";
-import type {
-  FormElement,
-  FormSettings,
-  SidebarItemType,
-} from "@/utils/types/type";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import type { FormElement, FormSettings, SidebarItemType } from "@/types/type";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { SidebarItem } from "@/components/NewForm/SidebarItem";
-import { AnswerForm } from "@/components/NewForm/AnswerForm";
-import { MultipleList } from "@/components/NewForm/MultipleList";
+import {
+  SidebarForm,
+  FormName,
+  FormBuilder,
+  SidebarItem,
+  AnswerForm,
+  MultipleList,
+} from "@/components/FormBuilder";
+import { checkFormData, createFormToSupabase, updateForm } from "@/api/formApi";
 
-const FormEditorPage = () => {
+export const FormEditorPage = () => {
   const user = useAuthUser();
   const { id: formId } = useParams<{ id: string }>();
   const [formElements, setFormElements] = useState<FormElement[]>([]);
@@ -200,5 +196,3 @@ const FormEditorPage = () => {
     </DndContext>
   );
 };
-
-export default FormEditorPage;

@@ -1,11 +1,11 @@
-import { getUserForms } from "@/api/getUserForms";
+import { getUserForms } from "@/api/formApi";
 import { FormList } from "@/components/Main/FormList";
 import { SearchInput } from "@/components/Main/SearchInput";
-import { SortedMenu } from "@/components/SortedMenu";
+import { SortedMenu } from "@/components/SortMenu";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import { useAuthUser } from "@/hooks/useAuthUse";
-import { type FormFromDB } from "@/utils/types/type";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { type FormFromDB } from "@/types/type";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";

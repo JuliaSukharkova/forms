@@ -3,15 +3,15 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { CircleX, Eye, EyeOff, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import { passwordValidation } from "@/utils/validation/authValidation";
+import { cn } from "@/services/lib/utils";
+import { passwordValidation } from "@/services/validation/authValidation";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
   type User,
 } from "firebase/auth";
-import { useAuthUser } from "@/hooks/useAuthUse";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import type { FirebaseError } from "firebase/app";
 import { toast } from "sonner";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/services/lib/utils";
 
 interface IText {
   text?: string;
@@ -6,5 +6,9 @@ interface IText {
 }
 
 export const Title = ({ text, className }: IText) => {
-  return <h1 className={cn("text-2xl font-semibold text-foreground", className)}>{text}</h1>;
+  return (
+    <h1 className={cn("text-2xl font-semibold text-foreground", className)}>
+      {text}
+    </h1>
+  );
 };
