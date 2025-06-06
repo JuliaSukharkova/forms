@@ -27,13 +27,15 @@
 
 ## 📸 Screenshots
 
-| Form Editor | Form Submission | Analytics |
-|-------------|-----------------|---------------|
-| ![Form Editor](public/screenshots/formeditor.png) | ![Form Submission](public/screenshots/formSubmit.png) | ![Analytics 1](public/screenshots/analyticsResponses.png) |
-
-| Analytics | User Profile | Sign In |  Sign Up  |
-|---------------|--------------|---------|---------|
-| ![Analytics 2](public/screenshots/analyticsChart.png) | ![User Profile](public/screenshots/uesrProfile.png) | ![Sign In](public/screenshots/signIn.png) | ![Sign Up](public/screenshots/signUp.png) |
+| Form Editor | Form Submission |
+|-------------|-----------------|
+| ![Form Editor](public/screenshots/formeditor.png) | ![Form Submission](public/screenshots/formSubmit.png) |
+Analytic Responses | Analytic Charts
+---------------|---------------| 
+| ![Analytics 1](public/screenshots/analyticsResponses.png) | ![Analytics 2](public/screenshots/analyticsChart.png) |
+| User Profile | Sign In |  Sign Up  |
+|--------------|---------|---------|
+|  ![User Profile](public/screenshots/userProfile.png) | ![Sign In](public/screenshots/signIn.png) | ![Sign Up](public/screenshots/signUp.png) |
 
 
 ---
