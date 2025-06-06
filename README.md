@@ -3,7 +3,7 @@
 
 > Welcome to **Forms**, a powerful web application for creating, managing, and analyzing forms, inspired by Google Forms. Built with React and TypeScript, this project showcases my skills as a Frontend Developer, featuring drag-and-drop form building, real-time analytics, form timers, and secure authentication.
 
-🔗 [Link to the project](https://github.com/JuliaSukharkova/forms)
+🔗 [Link to the project](https://juliasukharkova.github.io/forms)
 
 ---
 
