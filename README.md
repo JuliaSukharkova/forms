@@ -27,15 +27,18 @@
 
 ## 📸 Screenshots
 
+| Sign In |  Sign Up  |
+|-------------|-------------|
+| ![Sign In](public/screenshots/signIn.png) | ![Sign Up](public/screenshots/signUp.png) |
+| User Profile | Main Page
+| | |
+|  ![User Profile](public/screenshots/userProfile.png) | ![Main Page](public/screenshots/main.png) |
 | Form Editor | Form Submission |
-|-------------|-----------------|
+| | |
 | ![Form Editor](public/screenshots/formeditor.png) | ![Form Submission](public/screenshots/formSubmit.png) |
-Analytic Responses | Analytic Charts
----------------|---------------| 
+|Analytic Responses | Analytic Charts |
+|                  |                 | 
 | ![Analytics 1](public/screenshots/analyticsResponses.png) | ![Analytics 2](public/screenshots/analyticsChart.png) |
-| User Profile | Sign In |  Sign Up  |
-|--------------|---------|---------|
-|  ![User Profile](public/screenshots/userProfile.png) | ![Sign In](public/screenshots/signIn.png) | ![Sign Up](public/screenshots/signUp.png) |
 
 
 ---
@@ -69,6 +72,7 @@ Analytic Responses | Analytic Charts
 
 3. **Set up environment variables**:
    - Create a `.env` file in the root directory based on `.env.example` (create it with the following template):
+     
      ```plaintext
      VITE_FIREBASE_API_KEY="your_firebase_api_key"
      VITE_FIREBASE_AUTH_DOMAIN="your_firebase_auth_domain"
