@@ -44,7 +44,7 @@ export const SignInPage = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-[420px] p-10 border border-primary-light rounded-xl backdrop-blur-[4px] bg-muted/40 transition-shadow shadow-[var(--shadow)] sm:border-none">
+      <div className="w-[420px] p-10 border border-primary-light rounded-xl backdrop-blur-[4px] bg-muted/40 transition-shadow shadow-[var(--shadow)] max-sm:border-none">
         <h2 className="text-xl font-semibold mb-6">Sign in to your account</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>

@@ -3,7 +3,7 @@ import type { FormFromDB } from "@/types/type";
 import type { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-export const useFormData = (formId: string | undefined, user: User | null) => {
+export const useFormData = (formId: string | undefined, user: User | null | undefined) => {
   const [form, setForm] = useState<FormFromDB | null>(null);
   const [time, setTime] = useState<number>(0);
   const [isTimeLimit, setIsTimeLimit] = useState(false);
