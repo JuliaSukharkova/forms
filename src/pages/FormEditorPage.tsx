@@ -15,8 +15,10 @@ import {
   SidebarItem,
   AnswerForm,
   MultipleList,
+  AIAssistantDrawer,
 } from "@/components/FormBuilder";
 import { checkFormData, createFormToSupabase, updateForm } from "@/api/formApi";
+import { Button } from "@/components/ui/button";
 
 export const FormEditorPage = () => {
   const user = useAuthUser();
@@ -33,6 +35,13 @@ export const FormEditorPage = () => {
   const [draggedItem, setDraggedItem] = useState<
     FormElement | SidebarItemType | null
   >(null);
+  const [aiOpen, setAIOpen] = useState(false);
+
+  const handleFormGenerated = (form: FormSettings) => {
+    setName(form.name);
+    setDesc(form.description);
+    setFormElements(form.elements);
+  };
 
   const fetchFormData = useCallback(async () => {
     if (!formId) return;
@@ -72,6 +81,7 @@ export const FormEditorPage = () => {
     if (!name.trim() && !desc.trim() && formElements.length === 0) {
       return;
     }
+    if (formElements.length === 0) return;
     if (!user || !formId) return;
     try {
       if (isFormExists) {
@@ -139,7 +149,7 @@ export const FormEditorPage = () => {
       onDragEnd={() => setDraggedItem(null)}
       onDragCancel={() => setDraggedItem(null)}
     >
-      <div className="m-5">
+      <div className="relative m-5">
         <BackButton />
         <Title text="Create form" className="my-5 text-primary-text" />
         <div className="flex items-start gap-5 w-full">
@@ -169,6 +179,20 @@ export const FormEditorPage = () => {
             />
           </div>
         </div>
+        <div className="absolute right-0 top-0">
+          <Button
+            className="cursor-pointer px-4 py-2"
+            onClick={() => setAIOpen(true)}
+            variant="outline"
+          >
+            <span className="animate-pulse">✨</span>AI Assistant
+          </Button>
+        </div>
+        <AIAssistantDrawer
+          open={aiOpen}
+          onClose={() => setAIOpen(false)}
+          onFormGenerated={handleFormGenerated}
+        />
       </div>
       <DragOverlay>
         {draggedItem &&
@@ -181,7 +205,7 @@ export const FormEditorPage = () => {
                 <AnswerForm
                   element={formItem}
                   requiredField={false}
-                  dragHandleProps={{}} // можно передать noop или просто пустой объект
+                  dragHandleProps={{}}
                 />
               ) : (
                 <MultipleList
