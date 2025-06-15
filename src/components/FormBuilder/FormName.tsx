@@ -21,7 +21,6 @@ export const FormName: FC<FormNameProps> = ({
   updateForm,
 }) => {
   const [isDescFocused, setIsDescFocused] = useState(false);
-  const descHasValue = updateForm && desc.trim() !== "";
 
   return (
     <div className="rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6  transition-shadow shadow-[var(--shadow)] space-y-3 ">
@@ -45,10 +44,8 @@ export const FormName: FC<FormNameProps> = ({
         onBlur={() => setIsDescFocused(false)}
         className={cn(
           "transition-colors resize-none",
-          requiredField && descHasValue && "border-destructive",
-          descHasValue && !isDescFocused
-            ? "text-muted-foreground"
-            : "text-foreground"
+          requiredField && updateForm && !desc.trim() && "border-destructive",
+          desc && isDescFocused ? "text-muted-foreground" : "text-foreground"
         )}
       />
     </div>
