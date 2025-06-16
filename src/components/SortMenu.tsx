@@ -32,13 +32,17 @@ export const SortedMenu = <T extends string>({
   const [triggerWidth, setTriggerWidth] = useState<number | null>(null);
 
   useEffect(() => {
-    const updateWidth = ()=> {
-    if (triggerRef.current) {
-      setTriggerWidth(triggerRef.current.offsetWidth);
-    }}
-    updateWidth()
-    window.addEventListener("resize", updateWidth)
-    return ()=> window.removeEventListener("resize", updateWidth)
+    if (!triggerRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry?.contentRect?.width) {
+        setTriggerWidth(entry.contentRect.width);
+      }
+    });
+
+    observer.observe(triggerRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -58,12 +62,12 @@ export const SortedMenu = <T extends string>({
       <DropdownMenuContent
         align="start"
         side="bottom"
-        style={{ width: triggerWidth ?? "auto",
-          minWidth: 150,
-          maxWidth:"100%"
-         }}
+        style={{
+          width: triggerWidth && window.innerWidth < 600 ? `${triggerWidth}px` : undefined,
+        }}
         className={cn(
-          "mt-1 rounded-md px-2 py-2 text-primary-text z-[90]",
+          "z-[90] mt-1 rounded-md px-2 py-2 text-primary-text",
+          "max-sm:w-full",
           menuClassName
         )}
       >

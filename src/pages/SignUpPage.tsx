@@ -193,7 +193,7 @@ export const SignUpPage = () => {
             {isLoading && (
               <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
             )}
-            t("signUp.submitButton")
+            {t("signUp.submitButton")}
           </Button>
           <div className=" text-right">
             <span>{t("signUp.haveAccount")}</span>
