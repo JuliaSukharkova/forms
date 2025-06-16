@@ -50,6 +50,7 @@
     "react-i18next": "^15.5.3",
     "react-router-dom": "^6.30.0",
     "recharts": "^2.15.3",
+    "shadcn": "^2.6.4",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
     "tailwind-scrollbar": "^4.0.2",
