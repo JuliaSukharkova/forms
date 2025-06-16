@@ -14,6 +14,18 @@ const Header = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 600);
     };
@@ -39,19 +51,18 @@ const Header = () => {
           </button>
           {open && (
             <div
-              className="fixed inset-0 bg-muted flex flex-col items-center justify-center z-50 p-6"
+              className="fixed inset-0 z-50 bg-muted text-primary-text h-screen overflow-hidden flex flex-col items-center justify-center p-6"
               role="dialog"
               aria-modal="true"
             >
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="absolute cursor-pointer top-6 right-6 p-2 rounded-md hover:bg-muted/80"
+                className="absolute top-6 right-6 p-2 rounded-md hover:bg-muted/80"
               >
-                <X className="w-6 h-6 hover:stroke-primary stroke-primary-text" />
+                <X className="w-6 h-6 stroke-primary-text hover:stroke-primary" />
               </button>
-
-              <nav className="flex flex-col justify-center items-center gap-6 text-primary-text text-xl">
+              <nav className="flex flex-col items-center gap-6 text-xl mt-10">
                 <NavLink
                   to="/"
                   onClick={() => setOpen(false)}
@@ -74,14 +85,11 @@ const Header = () => {
                   {t("header.userTitle")}
                 </NavLink>
                 <ThemeToggle
-                  isMobile={isMobile}
+                  isMobile
                   darkTitle={t("header.darkTitle")}
                   lightTitle={t("header.lightTitle")}
                 />
-                <LogoutButton
-                  isMobile={isMobile}
-                  title={t("header.logOutButton")}
-                />
+                <LogoutButton isMobile title={t("header.logOutButton")} />
               </nav>
             </div>
           )}

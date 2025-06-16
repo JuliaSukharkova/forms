@@ -32,9 +32,13 @@ export const SortedMenu = <T extends string>({
   const [triggerWidth, setTriggerWidth] = useState<number | null>(null);
 
   useEffect(() => {
+    const updateWidth = ()=> {
     if (triggerRef.current) {
       setTriggerWidth(triggerRef.current.offsetWidth);
-    }
+    }}
+    updateWidth()
+    window.addEventListener("resize", updateWidth)
+    return ()=> window.removeEventListener("resize", updateWidth)
   }, []);
 
   return (
@@ -43,7 +47,7 @@ export const SortedMenu = <T extends string>({
         ref={triggerRef}
         disabled={isDisabled}
         className={cn(
-          "relative px-5 py-1.5 rounded-md border border-border-light text-primary-text",
+          "relative px-5 py-1.5 rounded-md border border-border-light text-primary-text focus:ring-0 focus:outline-none",
           open && "text-primary-text/40 border-accent",
           className
         )}
@@ -54,9 +58,12 @@ export const SortedMenu = <T extends string>({
       <DropdownMenuContent
         align="start"
         side="bottom"
-        style={{ width: triggerWidth ?? "auto" }}
+        style={{ width: triggerWidth ?? "auto",
+          minWidth: 150,
+          maxWidth:"100%"
+         }}
         className={cn(
-          "mt-1 rounded-md px-2 py-2 text-primary-text z-50",
+          "mt-1 rounded-md px-2 py-2 text-primary-text z-[90]",
           menuClassName
         )}
       >
