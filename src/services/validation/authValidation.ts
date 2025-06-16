@@ -1,42 +1,44 @@
-export const emailValidation = {
-  required: "Email is required",
+import type { TFunction } from "i18next";
+
+export const emailValidation = (t: TFunction) => ({
+  required: t("validation.email.required"),
   pattern: {
     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: "Invalid email format",
+    message: t("validation.email.invalid"),
   },
-};
+});
 
-export const passwordValidation = {
-  required: "Password is required",
+export const passwordValidation = (t: TFunction) => ({
+  required: t("validation.password.required"),
   minLength: {
     value: 6,
-    message: "Minimum 6 characters",
+    message: t("validation.password.minLength"),
   },
-};
+});
 
-export const nameValidation = {
-  required: "Name is required",
+export const nameValidation = (t: TFunction) => ({
+  required: t("validation.name.required"),
   minLength: {
     value: 2,
-    message: "Name must be at least 2 characters",
+    message: t("validation.name.min"),
   },
   maxLength: {
     value: 50,
-    message: "Name must be at most 50 characters",
+    message: t("validation.name.max"),
   },
   pattern: {
     value: /^[A-ZА-ЯЁ][a-zа-яё\s-]+$/i,
-    message: "Name must contain only letters and dashes",
+    message: t("validation.name.invalid"),
   },
-};
+});
 
-export const lastNameValidation = {
-  ...nameValidation,
-  required: "Last name is required",
-};
+export const lastNameValidation = (t: TFunction) => ({
+  ...nameValidation(t),
+  required: t("validation.lastName.required"),
+});
 
-export const repeatPasswordValidation = (password: string) => ({
-  ...passwordValidation,
+export const repeatPasswordValidation = (password: string, t: TFunction) => ({
+  ...passwordValidation(t),
   validate: (value: string) =>
-    value === password || "Passwords do not match",
+    value === password || t("validation.repeatPassword.notMatch"),
 });

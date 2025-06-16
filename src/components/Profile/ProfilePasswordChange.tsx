@@ -14,6 +14,7 @@ import {
 import { useAuthUser } from "@/hooks/useAuthUser";
 import type { FirebaseError } from "firebase/app";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 type PasswordData = {
   newPassword: string;
@@ -32,6 +33,7 @@ export const ProfilePassword = () => {
   const [showCurrent, setShowCurrent] = useState<boolean>(false);
   const [showNew, setShowNew] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const handlePasswordChange = async (user: User, data: PasswordData) => {
     try {
@@ -42,12 +44,12 @@ export const ProfilePassword = () => {
       );
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, data.newPassword);
-      toast.success("Password successfully changed");
+      toast.success(t("profile.toastSuccess"));
     } catch (error: unknown) {
       if ((error as FirebaseError).code === "auth/wrong-password") {
-        toast.error("Wrong current password");
+        toast.error(t("profile.toastErrorOne"));
       } else {
-        toast.error("Error updating password");
+        toast.error(t("profile.toastErrorSecond"));
       }
     } finally {
       reset();
@@ -68,9 +70,9 @@ export const ProfilePassword = () => {
     <div className="flex-col rounded-xl border border-primary-light backdrop-blur-[4px] bg-muted/40 p-6 w-full  transition-shadow shadow-[var(--shadow)] space-y-4">
       <h1
         onClick={() => setIsVisible((prev) => !prev)}
-        className="flex justify-center items-center text-lg font-medium text-foreground cursor-pointer hover:text-primary"
+        className="flex justify-center items-center text-lg text-primary-text font-medium cursor-pointer hover:text-primary"
       >
-        Change password
+        {t("profile.titlePassword")}
       </h1>
 
       {isVisible && (
@@ -80,9 +82,9 @@ export const ProfilePassword = () => {
               <Input
                 id="currentPassword"
                 type={showCurrent ? "text" : "password"}
-                placeholder="Current password"
+                placeholder={t("profile.inputPassword")}
                 {...register("currentPassword", {
-                  required: "Enter current password",
+                  required: t("profile.requiredPassword"),
                 })}
                 className={cn(
                   "h-10 px-4 bg-muted",
@@ -106,8 +108,8 @@ export const ProfilePassword = () => {
               <Input
                 id="newPassword"
                 type={showNew ? "text" : "password"}
-                placeholder="New password"
-                {...register("newPassword", passwordValidation)}
+                placeholder={t("profile.inputNewPassword")}
+                {...register("newPassword", passwordValidation(t))}
                 className={cn(
                   "h-10 px-4 bg-muted",
                   errors.newPassword && "border-destructive"
@@ -130,11 +132,10 @@ export const ProfilePassword = () => {
             onClick={handleSubmit(onSubmit)}
             className="w-full mt-4 bg-primary hover:bg-primary/80 cursor-pointer"
           >
-            {isLoading ? (
+            {isLoading && (
               <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
-            ) : (
-              "Save password"
             )}
+            {t("profile.submitButton")}
           </Button>
 
           <Button
@@ -143,7 +144,7 @@ export const ProfilePassword = () => {
             className="w-full cursor-pointer"
           >
             <CircleX className="stroke-destructive mr-1" />
-            Cancel
+            {t("profile.cancelButton")}
           </Button>
         </>
       )}

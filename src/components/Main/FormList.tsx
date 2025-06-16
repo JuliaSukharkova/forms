@@ -16,6 +16,7 @@ import {
 import type { FormFromDB } from "@/types/type";
 import { toast } from "sonner";
 import { deleteFormById, getAnswersCount } from "@/api/formApi";
+import { useTranslation } from "react-i18next";
 
 interface IFormList {
   formName: string;
@@ -31,6 +32,7 @@ export const FormList: FC<IFormList> = ({
   setFormElements,
 }) => {
   const [answersCount, setAnswersCount] = useState<number>(0);
+  const {t} =  useTranslation()
   const handleDelete = async () => {
     try {
       await deleteFormById(formId);
@@ -49,7 +51,7 @@ export const FormList: FC<IFormList> = ({
   }, [formId]);
 
   return (
-    <div className="flex flex-col justify-between bg-card border shadow rounded-md w-full max-w-[300px] h-[180px] overflow-hidden">
+    <div className="flex flex-col justify-between bg-card border shadow rounded-md w-full max-w-[300px] max-sm:w-full max-sm:max-w-full h-[180px] max-sm:h-full overflow-hidden">
       <div className="flex flex-col justify-center items-center flex-1 py-2">
         <Link
           to={`/form/${formId}`}
@@ -58,29 +60,29 @@ export const FormList: FC<IFormList> = ({
           {formName}
         </Link>
         <Separator className="w-full" />
-        <div className="flex items-center justify-center px-4 my-2 h-[60px]">
-          <h2 className="text-center line-clamp-3">{formDesc}</h2>
+        <div className="flex items-center justify-center px-4 my-2 h-[60px] max-sm:h-fit">
+          <h2 className="text-center line-clamp-3  max-sm:line-clamp-none">{formDesc}</h2>
         </div>
         <Separator className="w-full" />
         <div className="flex-1"></div>
         <div className="flex w-full p-2">
           <Link
             to={`/form/${formId}/responses`}
-            className="relative flex flex-1 justify-center p-2 rounded-md cursor-pointer hover:bg-accent"
+            className="flex flex-1 justify-center p-2 rounded-md cursor-pointer hover:bg-accent"
           >
-            <MessagesSquare className="w-4 h-4" />
-            <p className="absolute top-0 right-7 flex items-center justify-center w-4 h-4 text-[10px] bg-destructive rounded-full text-primary-foreground">
+            <div className="relative"><MessagesSquare className="w-4 h-4" />
+            <p className="absolute left-2.5 top-[-9px] flex items-center justify-center w-4 h-4 text-[10px] bg-destructive rounded-full text-primary-foreground">
               {answersCount}
-            </p>
+            </p></div>
           </Link>
-          <Separator orientation="vertical" className="mx-1" />
+          <Separator orientation="vertical" className="mx-1 max-sm:data-[orientation=vertical]:h-auto" />
           <Link
             to={`/form/${formId}/edit`}
             className="flex flex-1 justify-center p-2 rounded-md cursor-pointer hover:bg-accent"
           >
             <Pencil className="w-4 h-4" />
           </Link>
-          <Separator orientation="vertical" className="mx-1" />
+          <Separator orientation="vertical" className="mx-1 max-sm:data-[orientation=vertical]:h-auto" />
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="flex flex-1 justify-center p-2 rounded-md w-full cursor-pointer hover:bg-destructive-bright">
@@ -89,20 +91,20 @@ export const FormList: FC<IFormList> = ({
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Form</AlertDialogTitle>
+                <AlertDialogTitle>{t("mainPage.deleteFormTitle")}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete this form?
+                {t("mainPage.deleteFormDescription")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel className="cursor-pointer">
-                  Cancel
+                {t("mainPage.cancelButton")}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   className="cursor-pointer bg-destructive hover:bg-destructive/80"
                   onClick={handleDelete}
                 >
-                  Delete
+                  {t("mainPage.deleteButton")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

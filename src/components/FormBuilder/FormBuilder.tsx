@@ -21,6 +21,7 @@ import {
 import { DraggableFormItem } from "./DraggableFormItem";
 import { AnswerForm } from "./AnswerForm";
 import { MultipleList } from "./MultipleList";
+import { useTranslation } from "react-i18next";
 
 export const FormBuilder = ({
   formElements,
@@ -33,6 +34,7 @@ export const FormBuilder = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { setNodeRef } = useDroppable({ id: "form-dropzone" });
+  const { t } = useTranslation();
 
   useDndMonitor({
     onDragEnd(event) {
@@ -120,7 +122,9 @@ export const FormBuilder = ({
       {requiredField && formElements.length === 0 && (
         <div className="flex items-center gap-1">
           <CircleAlert className="stroke-destructive" />
-          <span className="text-destructive">Add at least 1 question.</span>
+          <span className="text-destructive">
+            {t("formEditor.requiredField")}
+          </span>
         </div>
       )}
       <SortableContext
@@ -182,7 +186,7 @@ export const FormBuilder = ({
                 className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
               >
                 <SquarePen className="w-4 h-4 hover:fill-primary/80" />
-                Single line answer
+                {t("formEditor.singleAnswerTitle")}
               </button>
               <button
                 onClick={() => {
@@ -192,7 +196,7 @@ export const FormBuilder = ({
                 className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
               >
                 <Text className="w-4 h-4 hover:fill-primary/80" />
-                Multiple line answer
+                {t("formEditor.multipleAnswerTitle")}
               </button>
               <button
                 onClick={() => {
@@ -202,7 +206,7 @@ export const FormBuilder = ({
                 className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
               >
                 <CircleCheck className="w-4 h-4 hover:fill-primary/80" />
-                Single choice list
+                {t("formEditor.singleChoiceTitle")}
               </button>
               <button
                 onClick={() => {
@@ -212,7 +216,7 @@ export const FormBuilder = ({
                 className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
               >
                 <BookPlus className="w-4 h-4 hover:fill-primary/80" />
-                Multiple choice list
+                {t("formEditor.multipleChoiceTitle")}
               </button>
             </div>
           </PopoverContent>

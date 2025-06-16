@@ -10,10 +10,14 @@ interface FormNameProps {
   setDesc: React.Dispatch<React.SetStateAction<string>>;
   requiredField: boolean;
   updateForm: boolean;
+  labelName: string;
+  labelDescription: string;
 }
 
 export const FormName: FC<FormNameProps> = ({
   name,
+  labelName,
+  labelDescription,
   setName,
   desc,
   setDesc,
@@ -25,7 +29,7 @@ export const FormName: FC<FormNameProps> = ({
   return (
     <div className="rounded-xl border border-border backdrop-blur-[4px] bg-muted/80 p-6  transition-shadow shadow-[var(--shadow)] space-y-3 ">
       <Input
-        placeholder="Name"
+        placeholder={labelName}
         value={name}
         required
         onChange={(e) => setName(e.target.value)}
@@ -36,7 +40,7 @@ export const FormName: FC<FormNameProps> = ({
         )}
       />
       <Textarea
-        placeholder="Description"
+        placeholder={labelDescription}
         value={desc}
         required
         onChange={(e) => setDesc(e.target.value)}

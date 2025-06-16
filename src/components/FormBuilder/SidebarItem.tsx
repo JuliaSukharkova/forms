@@ -1,6 +1,7 @@
 import { useDraggable } from "@dnd-kit/core";
 import type { SidebarItemType } from "@/types/type";
 import { BookPlus, CircleCheck, SquarePen, Text } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
@@ -12,6 +13,7 @@ export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
       fromSidebar: true,
     },
   });
+  const { t } = useTranslation();
 
   let icon;
   let label;
@@ -19,21 +21,21 @@ export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
   switch (true) {
     case item.type === "answer" && item.data === "single":
       icon = <SquarePen className="w-4 h-4" />;
-      label = "Single line answer";
+      label = t("formEditor.singleAnswerTitle");
       break;
 
     case item.type === "answer" && item.data === "multiple":
       icon = <Text className="w-4 h-4" />;
-      label = "Multiple line answer";
+      label = t("formEditor.multipleAnswerTitle");
       break;
 
     case item.type === "multipleList" && item.data === "single":
       icon = <CircleCheck className="w-4 h-4" />;
-      label = "Single choice list";
+      label = t("formEditor.singleChoiceTitle");
       break;
     case item.type === "multipleList" && item.data === "multiple":
       icon = <BookPlus className="w-4 h-4" />;
-      label = "Multiple choice list";
+      label = t("formEditor.multipleChoiceTitle");
       break;
     default:
       return null;
@@ -45,7 +47,7 @@ export const SidebarItem = ({ item }: { item: SidebarItemType }) => {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className={`cursor-pointer flex items-center gap-1 ${
+      className={`cursor-pointer flex items-center hover:bg-accent/50 p-0.5 rounded-xs gap-1 ${
         isDragging ? "opacity-50" : ""
       }`}
     >

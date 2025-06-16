@@ -1,0 +1,162 @@
+{
+  "mainPage": {
+    "title": "Мои формы",
+    "createForm": "Создать форму",
+    "noForms": "Форм не найдено",
+    "sort": {
+      "new": "Сначала новые",
+      "old": "Сначала старые",
+      "az": "По алфавиту А-Я",
+      "za": "По алфавиту Я-А"
+    },
+    "search": "Найти",
+    "deleteFormTitle": "Удалить форму",
+    "deleteFormDescription": "Вы уверены, что хотите удалить эту форму?",
+    "cancelButton": "Отмена",
+    "deleteButton": "Удалить"
+  },
+  "header": {
+    "mainTitle": "Главная",
+    "newFormTitle": "Новая форма",
+    "userTitle": "Профиль",
+    "darkTitle": "Темная тема",
+    "lightTitle": "Светлая тема",
+    "logOutButton": "Выйти"
+  },
+  "signUp": {
+    "title": "Регистрация",
+    "labelName": "Имя",
+    "labelLastName": "Фамилия",
+    "labelEmail": "Email",
+    "labelPassword": "Пароль",
+    "labelRepeatPassword": "Повторите пароль",
+    "submitButton": "Зарегистрироваться",
+    "haveAccount": "Есть аккаунт?",
+    "signInLink": "Войти",
+    "dialogTitle": "Аккаунт уже существует",
+    "dialogDescription": "Пользователь с таким email уже зарегистрирован. Войдите или используйте другой email.",
+    "dialogButton": "Закрыть"
+  },
+  "signIn": {
+    "title": "Авторизация",
+    "labelEmail": "Email",
+    "labelPassword": "Пароль",
+    "submitButton": "Войти",
+    "haveAccount": "Нет аккаунта?",
+    "signUpLink": "Зарегистрироваться"
+  },
+  "profile": {
+    "title": "Мой профиль",
+    "labelName": "Имя",
+    "labelLastName": "Фамилия",
+    "dateTitle": "Дата регистрации:",
+    "cancelButton": "Отмена",
+    "toastSuccess": "Пароль успешно изменён",
+    "toastErrorOne": "Неверный текущий пароль",
+    "toastErrorSecond": "Ошибка при обновлении пароля",
+    "titlePassword": "Изменить пароль",
+    "inputPassword": "Текущий пароль",
+    "requiredPassword": "Введите текущий пароль",
+    "inputNewPassword": "Новый пароль",
+    "submitButton": "Сохранить пароль"
+  },
+  "formSubmit": {
+    "toastError": "Ошибка при отправке формы:",
+    "successMessage": "Ответ успешно отправлен!",
+    "timeTitle": "Внимание!",
+    "timeDescOne": "У вас есть",
+    "timeDescSecond": "на заполнение этой формы!",
+    "timeButton": "Начать",
+    "minTitle": "минута",
+    "hourTitle": "час",
+    "secTitle": "секунда",
+    "plural": "ы",
+    "secondsTitle": "0 секунд",
+    "submitButton": "Отправить форму",
+    "editButton": "Редактировать форму",
+    "timerTitle": "Осталось времени"
+  },
+  "formResponse": {
+    "title": "Ответы",
+    "sort": {
+      "new": "Сначала новые",
+      "old": "Сначала старые"
+    },
+    "tableTitle": "Таблица",
+    "analyticTitle": "Аналитика",
+    "notFoundAnalytic": "Аналитика не найдена.",
+    "noFound": "Ничего не найдено."
+  },
+  "formEditor": {
+    "toastError": "Ошибка при сохранении формы:",
+    "toastSuccessSave": "Форма успешно сохранена",
+    "toastSuccessUpdate": "Форма успешно обновлена",
+    "mobileTitle": "Конструктор недоступен на мобильных устройствах.",
+    "title": "Создание формы",
+    "sidebarSuccess": "Форма успешно удалена",
+    "sidebarError": "Ошибка при удалении формы:",
+    "sidebarTitlePrimary": "Конструктор",
+    "sidebarTitleSecond": "Настройки",
+    "sidebarInput": "Введите тег",
+    "sidebarTimeLimit": "Ограничение",
+    "sidebarActionTitle": "Действия",
+    "sidebarViewTitle": "Предпросмотр",
+    "sidebarSaveButton": "Сохранить форму",
+    "formName": "Название",
+    "formDescription": "Описание",
+    "requiredField": "Добавьте хотя бы один вопрос.",
+    "singleAnswerTitle": "Однострочный ответ",
+    "multipleAnswerTitle": "Многострочный ответ",
+    "singleChoiceTitle": "Список одиночного выбора",
+    "multipleChoiceTitle": "Список множественного выбора",
+    "aiButton": "AI Ассистент",
+    "aiTitle": "AI Ассистент Форм",
+    "aiDescriptionOne": "Опишите форму, которую хотите создать.",
+    "aiDescriptionSecond": "Например, форма для записи к стоматологу.",
+    "aiButtonSave": "Сгенерировать",
+    "aiButtonLoading": "Генерация...",
+    "aiButtonClose": "Закрыть",
+    "answerForm": {
+      "input": "Введите вопрос",
+      "copyBelowTitle": "Создать копию снизу",
+      "copyToEnd": "Создать копию в конце",
+      "requiredTitle": "Обязательное поле"
+    },
+    "multipleList": {
+      "inputTitle": "Введите вопрос",
+      "inputOption": "Опция",
+      "addButton": "Добавить",
+      "copyBelowTitle": "Создать копию ниже",
+      "copyToEnd": "Создать копию в конец",
+      "requiredTitle": "Обязательное поле",
+      "singleChoice": "Одиночный выбор",
+      "multipleChoice": "Множественный выбор"
+    }
+  },
+  "footer": {
+    "title": "Юлия Сухарькова",
+    "description": ". Все права защищены."
+  },
+  "validation": {
+    "email": {
+      "required": "Введите email",
+      "invalid": "Неверный формат email"
+    },
+    "password": {
+      "required": "Введите пароль",
+      "minLength": "Минимум 6 символов"
+    },
+    "name": {
+      "required": "Введите имя",
+      "min": "Имя должно содержать не менее 2 символов",
+      "max": "Имя должно содержать не более 50 символов",
+      "invalid": "Имя может содержать только буквы и дефисы"
+    },
+    "lastName": {
+      "required": "Введите фамилию"
+    },
+    "repeatPassword": {
+      "notMatch": "Пароли не совпадают"
+    }
+  }
+}

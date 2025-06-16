@@ -10,8 +10,25 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onFormGenerated: (form: FormSettings) => void;
+  title: string;
+  descriptionOne: string;
+  descriptionSecond: string;
+  aiButtonSave: string;
+  aiButtonLoading: string;
+  aiButtonClose: string;
 };
-export function AIAssistantDrawer({ open, onClose, onFormGenerated }: Props) {
+
+export function AIAssistantDrawer({
+  open,
+  onClose,
+  onFormGenerated,
+  title,
+  descriptionOne,
+  descriptionSecond,
+  aiButtonClose,
+  aiButtonLoading,
+  aiButtonSave,
+}: Props) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -44,7 +61,9 @@ export function AIAssistantDrawer({ open, onClose, onFormGenerated }: Props) {
       <div
         className={cn(
           "fixed inset-0 z-40 bg-black/40 transition-opacity duration-200",
-          open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+          open
+            ? "opacity-100 visible"
+            : "opacity-0 invisible pointer-events-none"
         )}
         onClick={onClose}
       />
@@ -60,12 +79,12 @@ export function AIAssistantDrawer({ open, onClose, onFormGenerated }: Props) {
           <div className="flex flex-col justify-center items-center mb-5">
             <div className="flex justify-center items-center gap-1">
               <Sparkle className="stroke-primary w-4 h-4" />
-              <h2 className="text-lg font-semibold">AI Form Assistant</h2>
+              <h2 className="text-lg font-medium text-primary">{title}</h2>
             </div>
             <p className="text-muted-foreground text-center">
-              Describe the form you want to generate.
+              {descriptionOne}
               <br />
-              For example, "Form for an appointment with a dentist."
+              {descriptionSecond}
             </p>
           </div>
           <Textarea
@@ -88,14 +107,18 @@ export function AIAssistantDrawer({ open, onClose, onFormGenerated }: Props) {
             {loading ? (
               <>
                 <Loader className="w-4 h-4 animate-spin mr-2" />
-                Generating
+                {aiButtonLoading}
               </>
             ) : (
-              "Generate"
+              aiButtonSave
             )}
           </Button>
-          <Button className="cursor-pointer" variant="outline" onClick={onClose}>
-            Close
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={onClose}
+          >
+            {aiButtonClose}
           </Button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { SearchIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const SearchInput = ({
   isEmpty,
@@ -11,14 +12,15 @@ export const SearchInput = ({
   setSearchForm: React.Dispatch<React.SetStateAction<string>>;
   onSearch: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
-    <div aria-disabled={isEmpty} className="flex w-[400px] max-sm:w-60">
+    <div aria-disabled={isEmpty} className="flex w-[400px] max-sm:w-full">
       <input
         type="text"
         value={searchForm}
-        placeholder="Search"
+        placeholder={t("mainPage.search")}
         onChange={(e) => setSearchForm(e.target.value)}
-        className="rounded-l-md border w-full  border-border-light px-3 max-sm:px-1 hover:border-primary bg-muted backdrop-blur-lg cursor-pointer focus:outline-none focus:ring-0"
+        className="rounded-l-md border w-full  border-border-light px-3 py-1.5 hover:border-primary bg-muted cursor-pointer focus:outline-none focus:ring-0"
       />
       <button
         onClick={onSearch}

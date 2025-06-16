@@ -15,6 +15,7 @@ import type { FormData } from "@/types/type";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const SignInPage = () => {
   const {
@@ -24,6 +25,7 @@ export const SignInPage = () => {
   } = useForm<Pick<FormData, "email" | "password">>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const onSubmit = async (data: Pick<FormData, "email" | "password">) => {
     try {
@@ -45,20 +47,20 @@ export const SignInPage = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-[420px] p-10 border border-primary-light rounded-xl backdrop-blur-[4px] bg-muted/40 transition-shadow shadow-[var(--shadow)] max-sm:border-none">
-        <h2 className="text-xl font-semibold mb-6">Sign in to your account</h2>
+        <h2 className="text-xl font-semibold mb-6">{t("signIn.title")}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Label
               htmlFor="email"
               className={cn("mb-0.5", errors.email && "text-destructive")}
             >
-              Email
+              {t("signIn.labelEmail")}
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="Email"
-              {...register("email", emailValidation)}
+              placeholder={t("signIn.labelEmail")}
+              {...register("email", emailValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.email && "border-destructive"
@@ -74,13 +76,13 @@ export const SignInPage = () => {
               htmlFor="password"
               className={cn("mb-0.5", errors.password && "text-destructive")}
             >
-              Password
+              {t("signIn.labelPassword")}
             </Label>
             <Input
               id="password"
               type="password"
               placeholder="••••••••"
-              {...register("password", passwordValidation)}
+              {...register("password", passwordValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.password && "border-destructive"
@@ -91,16 +93,15 @@ export const SignInPage = () => {
             )}
           </div>
           <Button type="submit" className="w-full h-10 px-4 cursor-pointer">
-            {isLoading ? (
+            {isLoading && (
               <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
-            ) : (
-              "Sign in"
             )}
+            t("signIn.submitButton")
           </Button>
           <div className="text-right">
-            <span>Don’t have an account? </span>
+            <span>{t("signIn.haveAccount")}</span>
             <Link to="/register" className="underline hover:text-primary">
-              Create account
+              {t("signIn.signUpLink")}
             </Link>
           </div>
         </form>

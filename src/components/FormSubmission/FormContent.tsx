@@ -18,6 +18,8 @@ type Props = {
   onSubmit: (e: React.FormEvent) => Promise<void>;
   formId?: string;
   isFormValid: boolean;
+  submitButton: string;
+  editButton: string
 };
 
 export const FormContent = ({
@@ -29,6 +31,8 @@ export const FormContent = ({
   onSubmit,
   formId,
   isFormValid,
+  submitButton,
+  editButton
 }: Props) => {
   const getAnswerAsString = (id: string) =>
     typeof answers[id] === "string" ? answers[id] : "";
@@ -198,10 +202,10 @@ export const FormContent = ({
             !isFormValid ? "cursor-not-allowed" : "cursor-pointer"
           )}
         >
-          Submit form
+          {submitButton}
         </Button>
         <Button asChild className="cursor-pointer" variant="outline">
-          <Link to={`/form/${formId}/edit`}>Edit form</Link>
+          <Link to={`/form/${formId}/edit`}>{editButton}</Link>
         </Button>
       </div>
     </div>

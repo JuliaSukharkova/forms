@@ -1,7 +1,15 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const ThemeToggle = ({ isMobile }: { isMobile?: boolean }) => {
+const ThemeToggle = ({
+  isMobile,
+  darkTitle,
+  lightTitle,
+}: {
+  isMobile?: boolean;
+  darkTitle: string;
+  lightTitle: string;
+}) => {
   const [dark, setDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved === "dark") return true;
@@ -24,15 +32,15 @@ const ThemeToggle = ({ isMobile }: { isMobile?: boolean }) => {
       className="flex gap-0.5 justify-center items-center hover:text-primary cursor-pointer"
     >
       {dark ? (
-        <>
-          <Sun className="w-5 h-5 fill-yellow-400 stroke-yellow-400" />
-          Dark theme
-        </>
+        <div className="flex gap-0.5 items-center focus:text-primary ">
+          <Sun className="w-5 h-5" />
+          {darkTitle}
+        </div>
       ) : (
-        <>
-          <Moon className="stroke-gray-900 w-5 h-5" />
-          Light theme
-        </>
+        <div className="flex items-center gap-0.5 focus:text-primary ">
+          <Moon className="w-5 h-5" />
+          {lightTitle}
+        </div>
       )}
     </div>
   ) : (

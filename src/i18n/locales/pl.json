@@ -1,0 +1,162 @@
+{
+  "mainPage": {
+    "title": "Moje formularze",
+    "createForm": "Utwórz formularz",
+    "noForms": "Brak znalezionych formularzy",
+    "sort": {
+      "new": "Najpierw nowe",
+      "old": "Najpierw stare",
+      "az": "Alfabetycznie A–Z",
+      "za": "Alfabetycznie Z–A"
+    },
+    "search": "Szukaj",
+    "deleteFormTitle": "Usuń formularz",
+    "deleteFormDescription": "Czy na pewno chcesz usunąć ten formularz?",
+    "cancelButton": "Anuluj",
+    "deleteButton": "Usuń"
+  },
+  "header": {
+    "mainTitle": "Strona główna",
+    "newFormTitle": "Nowy formularz",
+    "userTitle": "Profil",
+    "darkTitle": "Tryb ciemny",
+    "lightTitle": "Tryb jasny",
+    "logOutButton": "Wyloguj się"
+  },
+  "signUp": {
+    "title": "Rejestracja",
+    "labelName": "Imię",
+    "labelLastName": "Nazwisko",
+    "labelEmail": "Email",
+    "labelPassword": "Hasło",
+    "labelRepeatPassword": "Powtórz hasło",
+    "submitButton": "Zarejestruj się",
+    "haveAccount": "Masz już konto?",
+    "signInLink": "Zaloguj się",
+    "dialogTitle": "Konto już istnieje",
+    "dialogDescription": "Użytkownik z tym adresem email już istnieje. Zaloguj się lub użyj innego adresu.",
+    "dialogButton": "Zamknij"
+  },
+  "signIn": {
+    "title": "Logowanie",
+    "labelEmail": "Email",
+    "labelPassword": "Hasło",
+    "submitButton": "Zaloguj się",
+    "haveAccount": "Nie masz konta?",
+    "signUpLink": "Zarejestruj się"
+  },
+  "profile": {
+    "title": "Mój profil",
+    "labelName": "Imię",
+    "labelLastName": "Nazwisko",
+    "dateTitle": "Data rejestracji:",
+    "cancelButton": "Anuluj",
+    "toastSuccess": "Hasło zostało pomyślnie zmienione",
+    "toastErrorOne": "Nieprawidłowe aktualne hasło",
+    "toastErrorSecond": "Błąd podczas aktualizacji hasła",
+    "titlePassword": "Zmień hasło",
+    "inputPassword": "Aktualne hasło",
+    "requiredPassword": "Wprowadź aktualne hasło",
+    "inputNewPassword": "Nowe hasło",
+    "submitButton": "Zapisz hasło"
+  },
+  "formSubmit": {
+    "toastError": "Błąd podczas wysyłania formularza:",
+    "successMessage": "Odpowiedź została wysłana pomyślnie!",
+    "timeTitle": "Uwaga!",
+    "timeDescOne": "Masz",
+    "timeDescSecond": "na wypełnienie tego formularza!",
+    "timeButton": "Rozpocznij",
+    "minTitle": "minuta",
+    "hourTitle": "godzina",
+    "secTitle": "sekunda",
+    "plural": "y",
+    "secondsTitle": "0 sekund",
+    "submitButton": "Wyślij formularz",
+    "editButton": "Edytuj formularz",
+    "timerTitle": "Pozostały czas"
+  },
+  "formResponse": {
+    "title": "Odpowiedzi",
+    "sort": {
+      "new": "Najpierw nowe",
+      "old": "Najpierw stare"
+    },
+    "tableTitle": "Tabela",
+    "analyticTitle": "Analiza",
+    "notFoundAnalytic": "Nie znaleziono analizy.",
+    "noFound": "Nic nie znaleziono."
+  },
+  "formEditor": {
+    "toastError": "Błąd podczas zapisywania formularza:",
+    "toastSuccessSave": "Formularz został zapisany",
+    "toastSuccessUpdate": "Formularz został zaktualizowany",
+    "mobileTitle": "Kreator nie jest dostępny na urządzeniach mobilnych.",
+    "title": "Tworzenie formularza",
+    "sidebarSuccess": "Formularz został usunięty",
+    "sidebarError": "Błąd podczas usuwania formularza:",
+    "sidebarTitlePrimary": "Kreator",
+    "sidebarTitleSecond": "Ustawienia",
+    "sidebarInput": "Wprowadź tag",
+    "sidebarTimeLimit": "Limit",
+    "sidebarActionTitle": "Akcje",
+    "sidebarViewTitle": "Podgląd",
+    "sidebarSaveButton": "Zapisz formularz",
+    "formName": "Nazwa",
+    "formDescription": "Opis",
+    "requiredField": "Dodaj co najmniej jedno pytanie.",
+    "singleAnswerTitle": "Odpowiedź jednoliniowa",
+    "multipleAnswerTitle": "Odpowiedź wieloliniowa",
+    "singleChoiceTitle": "Lista jednokrotnego wyboru",
+    "multipleChoiceTitle": "Lista wielokrotnego wyboru",
+    "aiButton": "Asystent AI",
+    "aiTitle": "Asystent formularzy AI",
+    "aiDescriptionOne": "Opisz formularz, który chcesz wygenerować.",
+    "aiDescriptionSecond": "Na przykład: formularz zapisu do dentysty.",
+    "aiButtonSave": "Wygeneruj",
+    "aiButtonLoading": "Generowanie...",
+    "aiButtonClose": "Zamknij",
+    "answerForm": {
+      "input": "Wprowadź pytanie",
+      "copyBelowTitle": "Utwórz kopię poniżej",
+      "copyToEnd": "Utwórz kopię na końcu",
+      "requiredTitle": "Pole wymagane"
+    },
+    "multipleList": {
+      "inputTitle": "Wprowadź pytanie",
+      "inputOption": "Opcja",
+      "addButton": "Dodaj",
+      "copyBelowTitle": "Utwórz kopię poniżej",
+      "copyToEnd": "Utwórz kopię na końcu",
+      "requiredTitle": "Pole wymagane",
+      "singleChoice": "Pojedynczy wybór",
+      "multipleChoice": "Wielokrotny wybór"
+    }
+  },
+  "footer": {
+    "title": "Julia Sukharkova",
+    "description": ". Wszelkie prawa zastrzeżone."
+  },
+  "validation": {
+    "email": {
+      "required": "Wprowadź adres e-mail",
+      "invalid": "Nieprawidłowy format adresu e-mail"
+    },
+    "password": {
+      "required": "Wprowadź hasło",
+      "minLength": "Minimum 6 znaków"
+    },
+    "name": {
+      "required": "Wprowadź imię",
+      "min": "Imię musi mieć co najmniej 2 znaki",
+      "max": "Imię może mieć maksymalnie 50 znaków",
+      "invalid": "Imię może zawierać tylko litery i myślniki"
+    },
+    "lastName": {
+      "required": "Wprowadź nazwisko"
+    },
+    "repeatPassword": {
+      "notMatch": "Hasła nie są takie same"
+    }
+  }
+}

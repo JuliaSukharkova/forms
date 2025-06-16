@@ -21,6 +21,7 @@ import {
 import { Separator } from "../ui/separator";
 import { TimePickerInput } from "./TimePickerInput";
 import { deleteFormById } from "@/api/formApi";
+import { useTranslation } from "react-i18next";
 
 interface SidebarFormProps {
   onSave: () => void;
@@ -45,48 +46,50 @@ export const SidebarForm = ({
 }: SidebarFormProps) => {
   const [isSettings, setIsSettings] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const handleDelete = async () => {
     if (!formId) return;
     try {
       await deleteFormById(formId);
-      toast.success("Form successfully deleted");
+      toast.success(t("formEditor.sidebarSuccess"));
       navigate("/");
     } catch (error) {
-      console.error("Error deleting form:", error);
+      toast.error(t("formEditor.sidebarSuccess"), {
+        description: String(error),
+      });
     }
   };
 
   return (
-    <div className="w-full sticky top-25 px-5 pb-5 self-start max-w-72 mx-auto rounded-xl border border-border backdrop-blur-[4px] bg-muted p-6  transition-shadow shadow-[var(--shadow)] space-y-6">
+    <div className="w-full sticky top-25 px-5 pb-5 self-start max-w-80 mx-auto rounded-xl border border-border backdrop-blur-[4px] bg-muted p-6  transition-shadow shadow-[var(--shadow)] space-y-3">
       <div className="flex items-center justify-between">
         <button
           aria-selected={!isSettings}
           className={cn(
-            "flex items-center gap-2 px-3 py-1.5 rounded-md transition-all  font-medium cursor-pointer",
+            "flex items-center gap-2 px-3 py-2 rounded-md transition-all font-medium cursor-pointer",
             !isSettings
               ? "bg-primary/10 text-primary"
-              : "hover:bg-accent hover:text-accent-foreground"
+              : "hover:bg-accent/50 hover:text-accent-foreground"
           )}
           onClick={() => setIsSettings(false)}
         >
           <House className="w-4 h-4" />
-          Constructor
+          {t("formEditor.sidebarTitlePrimary")}
         </button>
         <button
           aria-selected={isSettings}
           className={cn(
-            "flex items-center gap-2 px-3 py-1.5 rounded-md transition-all  font-medium cursor-pointer",
+            "flex items-center gap-2 px-3 py-2 rounded-md transition-all font-medium cursor-pointer",
             isSettings
               ? "bg-primary/10 text-primary"
-              : "hover:bg-accent hover:text-accent-foreground"
+              : "hover:bg-accent/50 hover:text-accent-foreground"
           )}
           onClick={() => setIsSettings(true)}
         >
           <Settings className="w-4 h-4" />
-          Settings
+          {t("formEditor.sidebarTitleSecond")}
         </button>
       </div>
-
       <div className="relative w-full h-1 bg-border rounded overflow-hidden">
         <div
           className={cn(
@@ -100,7 +103,7 @@ export const SidebarForm = ({
       {isSettings ? (
         <div className="space-y-4  text-muted-foreground">
           <div className="relative w-full flex flex-col">
-            <span className=" mb-1">Limit</span>
+            <span className=" mb-1">{t("formEditor.sidebarTimeLimit")}</span>
             <TimePickerInput
               value={/^\d{2}:\d{2}:\d{2}$/.test(time) ? time : "00:00:00"}
               onChange={(time) => setTime(time)}
@@ -111,12 +114,12 @@ export const SidebarForm = ({
             <Input
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              placeholder="Enter tag"
+              placeholder={t("formEditor.sidebarInput")}
             />
           </div>
         </div>
       ) : (
-        <div className="space-y-3 flex flex-col items-center justify-center  text-accent-foreground">
+        <div className="space-y-3 flex flex-col items-center justify-center text-accent-foreground">
           {sidebarItems.map((el) => (
             <SidebarItem key={el.id} item={el} />
           ))}
@@ -124,10 +127,14 @@ export const SidebarForm = ({
       )}
       <div className="flex flex-col gap-3">
         <Separator />
-        <h2 className="text-center  font-semibold">Actions</h2>
+        <h2 className="text-center  font-semibold">
+          {t("formEditor.sidebarActionTitle")}
+        </h2>
         {updateForm && (
           <Button asChild variant="secondary" className="w-full cursor-pointer">
-            <Link to={`/form/${formId}`}>View</Link>
+            <Link to={`/form/${formId}`}>
+              {t("formEditor.sidebarViewTitle")}
+            </Link>
           </Button>
         )}
         <Button onClick={onSave} className="w-full cursor-pointer">
@@ -136,7 +143,7 @@ export const SidebarForm = ({
           ) : (
             <>
               <Save className="w-4 h-4" />
-              Save form
+              {t("formEditor.sidebarViewTitle")}
             </>
           )}
         </Button>
@@ -145,25 +152,27 @@ export const SidebarForm = ({
             <AlertDialogTrigger asChild>
               <Button variant="destructive" className="w-full cursor-pointer">
                 <Trash2 className="w-4 h-4 stroke-destructive" />
-                Delete form
+                {t("mainPage.deleteFormTitle")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Form</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {t("mainPage.deleteFormTitle")}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete this form?
+                  {t("mainPage.deleteFormDescription")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel className="cursor-pointer">
-                  Cancel
+                  {t("mainPage.cancelButton")}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   className="cursor-pointer bg-destructive hover:bg-destructive/80"
                   onClick={handleDelete}
                 >
-                  Delete
+                  {t("mainPage.deleteButton")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

@@ -2,7 +2,13 @@ import { getAuth, signOut } from "firebase/auth";
 import { LogOutIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const LogoutButton = ({ isMobile }: { isMobile?: boolean }) => {
+const LogoutButton = ({
+  isMobile,
+  title,
+}: {
+  isMobile?: boolean;
+  title: string;
+}) => {
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -20,7 +26,8 @@ const LogoutButton = ({ isMobile }: { isMobile?: boolean }) => {
       onClick={handleLogout}
       className="flex gap-0.5 justify-center items-center hover:text-primary cursor-pointer"
     >
-      <LogOutIcon className="h-5 w-5"/> Log out
+      <LogOutIcon className="h-5 w-5" />
+      {title}
     </div>
   ) : (
     <button

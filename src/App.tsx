@@ -10,6 +10,7 @@ import {
   SignInPage,
   FormResponsePage,
 } from "./pages";
+import './i18n'
 
 function App() {
   return (

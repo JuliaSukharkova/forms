@@ -14,6 +14,7 @@ import { TooltipArrow } from "@radix-ui/react-tooltip";
 import React, { useState } from "react";
 import type { IFormProps } from "@/types/type";
 import { cn } from "@/services/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export const AnswerForm = React.memo(
   ({
@@ -27,6 +28,7 @@ export const AnswerForm = React.memo(
   }: IFormProps) => {
     const [open, setOpen] = useState<boolean>(false);
     const type: "single" | "multiple" = element.dataType;
+    const { t } = useTranslation();
 
     return (
       <div className="flex border bg-card rounded-md w-full active:border-dashed">
@@ -34,7 +36,7 @@ export const AnswerForm = React.memo(
           <div className="px-4 py-2 flex flex-col items-start">
             <Input
               value={element.label}
-              placeholder="Enter question"
+              placeholder={t("formEditor.answerForm.input")}
               onChange={(e) => onChange?.({ label: e.target.value })}
               className={cn(
                 "bg-muted",
@@ -48,12 +50,12 @@ export const AnswerForm = React.memo(
             {type === "single" ? (
               <p className="flex items-center gap-1.5">
                 <SquarePen className="w-4 h-4" />
-                Single line answer
+                {t("formEditor.singleAnswerTitle")}
               </p>
             ) : (
               <p className="flex items-center gap-1.5">
                 <Text className="w-4 h-4" />
-                Multiple line answer
+                {t("formEditor.multipleAnswerTitle")}
               </p>
             )}
             <div className="flex items-center gap-2.5">
@@ -79,7 +81,7 @@ export const AnswerForm = React.memo(
                       className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
                     >
                       <Copy className="w-4 h-4 hover:fill-primary/80" />
-                      Create copy below
+                      {t("formEditor.copyBelowTitle")}
                     </button>
                     <button
                       onClick={() => {
@@ -89,7 +91,7 @@ export const AnswerForm = React.memo(
                       className="flex items-center gap-2 hover:bg-accent hover:text-primary/80 px-2 py-1 rounded-md cursor-pointer"
                     >
                       <Copy className="w-4 h-4 hover:fill-primary/80" />
-                      Create copy to end
+                      {t("formEditor.copyToEnd")}
                     </button>
                   </div>
                 </PopoverContent>
@@ -113,7 +115,7 @@ export const AnswerForm = React.memo(
                     side="top"
                     className="bg-white text-black border shadow-md px-3 py-2 rounded-md"
                   >
-                    Required field
+                    {t("formEditor.requiredTitle")}
                     <TooltipArrow className="fill-white" />
                   </TooltipContent>
                 </Tooltip>

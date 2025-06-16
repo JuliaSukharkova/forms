@@ -29,6 +29,7 @@ import { TooltipArrow } from "@radix-ui/react-tooltip";
 import type { IFormProps } from "@/types/type";
 import { cn } from "@/services/lib/utils";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export const MultipleList = React.memo(
   ({
@@ -46,6 +47,7 @@ export const MultipleList = React.memo(
     const [options, setOptions] = useState<string[]>(
       element.options ? element.options : []
     );
+    const { t } = useTranslation();
 
     const handleAddOption = () => {
       setOptions([...options, ""]);
@@ -69,7 +71,7 @@ export const MultipleList = React.memo(
           <div className="px-4 pt-2 flex flex-col items-start">
             <Input
               value={element.label}
-              placeholder="Enter question"
+              placeholder={t("formEditor.multipleList.inputTitle")}
               onChange={(e) => onChange?.({ label: e.target.value })}
               className={cn(
                 "bg-muted",
@@ -87,7 +89,7 @@ export const MultipleList = React.memo(
               )}
               <Input
                 value={option}
-                placeholder={`Option ${index + 1}`}
+                placeholder={`${t("formEditor.multipleList.inputOption")} ${index + 1}`}
                 className={cn(
                   requiredField && !option.trim() && "border-destructive"
                 )}
@@ -119,14 +121,16 @@ export const MultipleList = React.memo(
                 onClick={handleAddOption}
                 className="cursor-pointer py-1.5 px-10 text-primary backdrop-blur-[4px] bg-primary/10 hover:backdrop-blur-[4px] rounded-md"
               >
-                Add
+                {t("formEditor.multipleList.addButton")}
               </button>
             </div>
             <Popover open={openChoice} onOpenChange={setOpenChoice}>
               <PopoverTrigger asChild>
                 <button className="relative flex items-center py-1.5 xl:px-10 lg:px-10 md:px-7 xs:px-2 gap-2 text-primary backdrop-blur-[4px] bg-primary/10 hover:backdrop-blur-[4px] shadow rounded-md cursor-pointer">
                   <span>
-                    {type === "single" ? "Single choice" : "Multiple choice"}
+                    {type === "single"
+                      ? t("formEditor.multipleList.singleChoice")
+                      : t("formEditor.multipleList.multipleChoice")}
                   </span>
                   <ChevronDown className="absolute top-2 right-2 w-4 h-4 stroke-primary" />
                 </button>
@@ -143,13 +147,13 @@ export const MultipleList = React.memo(
                     onClick={() => toggleType("single")}
                     className="flex items-center gap-2 text-primary hover:backdrop-blur-[4px] bg-muted hover:bg-primary/10 px-2 py-2 rounded-md cursor-pointer"
                   >
-                    Single choice
+                    {t("formEditor.multipleList.singleChoice")}
                   </button>
                   <button
                     onClick={() => toggleType("multiple")}
                     className="flex items-center gap-2 text-primary hover:backdrop-blur-[4px] bg-muted hover:bg-primary/10 px-2 py-2 rounded-md cursor-pointer"
                   >
-                    Multiple choice
+                    {t("formEditor.multipleList.multipleChoice")}
                   </button>
                 </div>
               </PopoverContent>
@@ -160,12 +164,12 @@ export const MultipleList = React.memo(
             {type === "single" ? (
               <p className="flex items-center gap-1.5">
                 <CircleCheck className="w-4 h-4" />
-                Single choice list
+                {t("formEditor.singleChoiceTitle")}
               </p>
             ) : (
               <p className="flex items-center gap-1.5">
                 <SquarePlus className="w-4 h-4" />
-                Multiple choice list
+                {t("formEditor.multipleChoiceTitle")}
               </p>
             )}
 
@@ -192,7 +196,7 @@ export const MultipleList = React.memo(
                       className="flex items-center gap-2  text-muted-foreground hover:backdrop-blur-[4px] bg-muted px-2 py-1 rounded-md"
                     >
                       <Copy className="w-4 h-4" />
-                      Create copy below
+                      {t("formEditor.multipleList.copyBelowTitle")}
                     </button>
                     <button
                       onClick={() => {
@@ -202,7 +206,7 @@ export const MultipleList = React.memo(
                       className="flex items-center gap-2  text-muted-foreground hover:backdrop-blur-[4px] bg-muted px-2 py-1 rounded-md"
                     >
                       <Copy className="w-4 h-4" />
-                      Create copy to end
+                      {t("formEditor.multipleList.copyToEnd")}
                     </button>
                   </div>
                 </PopoverContent>
@@ -226,7 +230,7 @@ export const MultipleList = React.memo(
                     side="top"
                     className="bg-popover text-popover-foreground border border-border shadow-md px-3 py-2 rounded-md"
                   >
-                    Required field
+                    {t("formEditor.multipleList.requiredTitle")}
                     <TooltipArrow className="fill-popover" />
                   </TooltipContent>
                 </Tooltip>
