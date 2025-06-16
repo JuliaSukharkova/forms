@@ -157,7 +157,7 @@ export const FormResponsePage = () => {
             onChange={setSortOrder}
             sortLabel={sortLabel}
             isDisabled={allAnswers.length === 0}
-            className="w-full"
+            className="max-sm:w-full"
           /></div>
           <Button className="px-10 cursor-pointer" onClick={handleExport}>
             Export CSV
