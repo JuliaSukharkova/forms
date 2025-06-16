@@ -19,6 +19,7 @@ import { UserExistsDialog } from "@/components/Dialog/UserExistsDialog";
 import type { FormData } from "@/types/type";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const SignUpPage = () => {
   const {
@@ -31,6 +32,7 @@ export const SignUpPage = () => {
   const password = watch("password");
   const [userExists, setUserExists] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -67,20 +69,20 @@ export const SignUpPage = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-[420px] p-10 border border-primary-light rounded-xl  backdrop-blur-[4px] bg-muted/40 transition-shadow shadow-[var(--shadow)] max-sm:border-none">
-        <h2 className="text-2xl font-semibold mb-6">Create your account</h2>
+        <h2 className="text-2xl font-semibold mb-6">{t("signUp.title")}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Label
               htmlFor="name"
               className={cn(errors.name && "text-destructive")}
             >
-              Name
+              {t("signUp.labelName")}
             </Label>
             <Input
               id="name"
               type="name"
-              placeholder="Name"
-              {...register("name", nameValidation)}
+              placeholder={t("signUp.labelName")}
+              {...register("name", nameValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.name && "border-destructive"
@@ -96,13 +98,13 @@ export const SignUpPage = () => {
               htmlFor="lastName"
               className={cn(errors.lastName && "text-destructive")}
             >
-              Last name
+              {t("signUp.labelLastName")}
             </Label>
             <Input
               id="lastName"
               type="lastName"
-              placeholder="Last Name"
-              {...register("lastName", lastNameValidation)}
+              placeholder={t("signUp.labelLastName")}
+              {...register("lastName", lastNameValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.lastName && "border-destructive"
@@ -120,13 +122,13 @@ export const SignUpPage = () => {
               htmlFor="email"
               className={cn(errors.email && "text-destructive")}
             >
-              Email
+              {t("signUp.labelEmail")}
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="Email"
-              {...register("email", emailValidation)}
+              placeholder={t("signUp.labelEmail")}
+              {...register("email", emailValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.email && "border-destructive"
@@ -142,13 +144,13 @@ export const SignUpPage = () => {
               htmlFor="password"
               className={cn(errors.password && "text-destructive")}
             >
-              Password
+              {t("signUp.labelPassword")}
             </Label>
             <Input
               id="password"
               type="password"
               placeholder="••••••••"
-              {...register("password", passwordValidation)}
+              {...register("password", passwordValidation(t))}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
                 errors.password && "border-destructive"
@@ -166,7 +168,7 @@ export const SignUpPage = () => {
               htmlFor="repeatPassword"
               className={cn(errors.repeatPassword && "text-destructive")}
             >
-              Repeat password
+              {t("signUp.labelRepeatPassword")}
             </Label>
             <Input
               id="repeatPassword"
@@ -174,7 +176,7 @@ export const SignUpPage = () => {
               placeholder="••••••••"
               {...register(
                 "repeatPassword",
-                repeatPasswordValidation(password)
+                repeatPasswordValidation(password, t)
               )}
               className={cn(
                 "h-10 px-4 mt-0.5 bg-muted",
@@ -188,16 +190,15 @@ export const SignUpPage = () => {
             )}
           </div>
           <Button type="submit" className="w-full h-10 px-4 cursor-pointer">
-            {isLoading ? (
+            {isLoading && (
               <Loader className="w-5 h-5 fill-primary-foreground animate-spin" />
-            ) : (
-              "Create account"
             )}
+            t("signUp.submitButton")
           </Button>
           <div className=" text-right">
-            <span>Already have an account? </span>
+            <span>{t("signUp.haveAccount")}</span>
             <Link to="/signin" className="underline hover:text-primary">
-              Sign in
+              {t("signUp.signInLink")}
             </Link>
           </div>
         </form>
@@ -205,6 +206,9 @@ export const SignUpPage = () => {
       <UserExistsDialog
         open={userExists}
         onClose={() => setUserExists(false)}
+        title={t("signUp.dialogTitle")}
+        description={t("signUp.dialogDescription")}
+        btn={t("signUp.dialogButton")}
       />
     </div>
   );

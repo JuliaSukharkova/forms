@@ -17,6 +17,7 @@ import type { FormData } from "@/types/type";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
 import ProfileAvatarUploader from "./ProfileAvatarUploader";
+import { useTranslation } from "react-i18next";
 
 const DEFAULT_AVATAR = "/forms/avatar.png";
 
@@ -45,6 +46,7 @@ export const ProfileFormChange = () => {
     watchedName.trim() !== (user?.displayName?.split(" ")[0] ?? "") ||
     watchedLastName.trim() !== (user?.displayName?.split(" ")[1] ?? "") ||
     photo !== (user?.photoURL || DEFAULT_AVATAR);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) {
@@ -118,11 +120,11 @@ export const ProfileFormChange = () => {
               htmlFor="name"
               className={cn(errors.name && "text-destructive")}
             >
-              Name
+              {t("profile.labelName")}
             </Label>
             <Input
               id="name"
-              {...register("name", nameValidation)}
+              {...register("name", nameValidation(t))}
               className={cn(
                 "h-10 pr-4 pl-8 bg-muted",
                 errors.name && "border-destructive"
@@ -141,11 +143,11 @@ export const ProfileFormChange = () => {
               htmlFor="lastName"
               className={cn(errors.lastName && "text-destructive")}
             >
-              Last Name
+              {t("profile.labelLastName")}
             </Label>
             <Input
               id="lastName"
-              {...register("lastName", lastNameValidation)}
+              {...register("lastName", lastNameValidation(t))}
               className={cn(
                 "h-10 pr-4 pl-8 bg-muted",
                 errors.lastName && "border-destructive"
@@ -162,14 +164,13 @@ export const ProfileFormChange = () => {
       ) : (
         <h2 className="text-lg font-semibold mb-3.5">{user?.displayName}</h2>
       )}
-
       <div className="flex items-center gap-1.5 mb-3.5 text-lg font-semibold">
         <Mail className="w-5 h-5" />
         {user?.email}
       </div>
       <div className="flex items-center gap-1.5 mb-3.5">
         <CalendarDays className="w-4 h-4" />
-        <h2>Date of registration:</h2>
+        <h2>{t("profile.dateTitle")}</h2>
         <span>{formatDate(user?.metadata.creationTime)}</span>
       </div>
 
@@ -177,10 +178,10 @@ export const ProfileFormChange = () => {
         <Button
           onClick={handleCancel}
           variant="destructive"
-          className="cursor-pointer w-full    mb-3.5"
+          className="cursor-pointer w-full  mb-3.5"
         >
           <CircleX className="stroke-destructive mr-1" />
-          Cancel
+          {t("profile.cancelButton")}
         </Button>
       )}
     </div>

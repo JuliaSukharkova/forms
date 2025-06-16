@@ -9,8 +9,15 @@ import {
 } from "@/services/validation/validateForm";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { SuccessMessage, TimeWarning, FormContent, Timer } from "@/components/FormSubmission";
+import {
+  SuccessMessage,
+  TimeWarning,
+  FormContent,
+  Timer,
+} from "@/components/FormSubmission";
 import { saveAnswerForm } from "@/api/formApi";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export const FormSubmitPage = () => {
   const user = useAuthUser();
@@ -23,6 +30,7 @@ export const FormSubmitPage = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { t } = useTranslation();
   const getAnswerElements = (
     form: FormFromDB,
     answers: Answers
@@ -51,7 +59,7 @@ export const FormSubmitPage = () => {
       await saveAnswerForm(user.uid, form.id, answerElements);
       setIsSuccess(true);
     } catch (error) {
-      console.log("Error sending answer form:", error);
+      toast.error(t("formSubmit.toastError"), { description: String(error) });
     } finally {
       setIsSubmitting(false);
     }
@@ -61,11 +69,20 @@ export const FormSubmitPage = () => {
     <div className="flex items-start w-full m-5 h-auto">
       <div className="rounded-md p-10 relative w-full backdrop-blur-[4px] bg-muted/40 shadow border">
         {isSuccess ? (
-          <SuccessMessage />
+          <SuccessMessage title={t("formSubmit.successMessage")} />
         ) : isTimeLimit && time ? (
           <TimeWarning
             time={secondsToTime(time)}
             onStart={() => setIsTimeLimit(false)}
+            title={t("formSubmit.timeTitle")}
+            titleDescOne={t("formSubmit.timeDescOne")}
+            titleDescSecond={t("formSubmit.timeDescSecond")}
+            timeButton={t("formSubmit.timeButton")}
+            hourTitle={t("formSubmit.hourTitle")}
+            minTitle={t("formSubmit.minTitle")}
+            secTitle={t("formSubmit.secTitle")}
+            plural={t("formSubmit.plural")}
+            secondsTitle={t("formSubmit.secondsTitle")}
           />
         ) : (
           <>
@@ -78,12 +95,15 @@ export const FormSubmitPage = () => {
               isFormValid={isFormValid}
               onSubmit={handleSubmit}
               formId={formId}
+              submitButton={t("formSubmit.submitButton")}
+              editButton={t("formSubmit.editButton")}
             />
           </>
         )}
       </div>
       {!isSuccess && !isTimeLimit && time > 0 && (
         <Timer
+          title={t("formSubmit.timerTitle")}
           timeLimit={time}
           onTimeEnd={() => {
             if (!isSuccess && !isSubmitting) {

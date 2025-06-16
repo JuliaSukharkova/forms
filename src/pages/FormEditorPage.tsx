@@ -19,6 +19,7 @@ import {
 } from "@/components/FormBuilder";
 import { checkFormData, createFormToSupabase, updateForm } from "@/api/formApi";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 export const FormEditorPage = () => {
   const user = useAuthUser();
@@ -36,6 +37,7 @@ export const FormEditorPage = () => {
     FormElement | SidebarItemType | null
   >(null);
   const [aiOpen, setAIOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleFormGenerated = (form: FormSettings) => {
     setName(form.name);
@@ -86,15 +88,15 @@ export const FormEditorPage = () => {
     try {
       if (isFormExists) {
         await updateForm(formId, form);
-        toast.success("Form successfully updated");
+        toast.success(t("formEditor.toastSuccessUpdate"));
       } else {
         const userId = user.uid;
         await createFormToSupabase(userId, form, formId);
-        toast.success("Form successfully saved");
+        toast.success(t("formEditor.toastSuccessSave"));
         setIsFormExists(true);
       }
     } catch (error) {
-      console.error(error);
+      toast.error(t("formEditor.toastError"), { description: String(error) });
     } finally {
       setWasSubmitted(false);
     }
@@ -114,9 +116,7 @@ export const FormEditorPage = () => {
   if (isMobile) {
     return (
       <div className="w-full h-screen flex items-center justify-center text-center">
-        <p className="text-lg font-medium">
-          The constructor is not available on mobile devices.
-        </p>
+        <p className="text-lg font-medium">{t("formEditor.mobileTitle")}</p>
       </div>
     );
   }
@@ -151,7 +151,10 @@ export const FormEditorPage = () => {
     >
       <div className="relative m-5">
         <BackButton />
-        <Title text="Create form" className="my-5 text-primary-text" />
+        <Title
+          text={t("formEditor.title")}
+          className="my-5 text-primary-text"
+        />
         <div className="flex items-start gap-5 w-full">
           <SidebarForm
             onSave={handleSaveForm}
@@ -166,6 +169,8 @@ export const FormEditorPage = () => {
           <div className="w-full flex flex-col gap-5">
             <FormName
               name={name}
+              labelName={t("formEditor.formName")}
+              labelDescription={t("formEditor.formDescription")}
               setName={setName}
               desc={desc}
               setDesc={setDesc}
@@ -181,17 +186,24 @@ export const FormEditorPage = () => {
         </div>
         <div className="absolute right-0 top-0">
           <Button
-            className="cursor-pointer px-4 py-2"
+            className="cursor-pointer border border-primary/10 focus:border-primary text-primary-text hover:text-primary-text hover:bg-primary/10 focus:bg-primary/10  px-4 py-2"
             onClick={() => setAIOpen(true)}
             variant="outline"
           >
-            <span className="animate-pulse">✨</span>AI Assistant
+            <span className="animate-pulse">✨</span>
+            {t("formEditor.aiButton")}
           </Button>
         </div>
         <AIAssistantDrawer
           open={aiOpen}
           onClose={() => setAIOpen(false)}
           onFormGenerated={handleFormGenerated}
+          title={t("formEditor.aiTitle")}
+          descriptionOne={t("formEditor.aiDescriptionOne")}
+          descriptionSecond={t("formEditor.aiDescriptionSecond")}
+          aiButtonSave={t("formEditor.aiButtonSave")}
+          aiButtonLoading={t("formEditor.aiButtonLoading")}
+          aiButtonClose={t("formEditor.aiButtonClose")}
         />
       </div>
       <DragOverlay>

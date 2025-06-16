@@ -13,9 +13,12 @@ import { Button } from "@/components/ui/button";
 type UserExistsDialogProps = {
   open: boolean;
   onClose: () => void;
+  title: string;
+  description: string;
+  btn: string;
 };
 
-export function UserExistsDialog({ open, onClose }: UserExistsDialogProps) {
+export function UserExistsDialog({ open, onClose, title, description, btn }: UserExistsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogPortal>
@@ -23,11 +26,10 @@ export function UserExistsDialog({ open, onClose }: UserExistsDialogProps) {
         <DialogContent className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 bg-gray-100 p-6 rounded-xl shadow-xl w-full max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-medium text-center">
-              Account already exists
+              {title}
             </DialogTitle>
             <DialogDescription className="text-center">
-              A user with this email is already registered. Try logging in or
-              use another email.
+            {description}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex justify-center mt-4">
@@ -36,7 +38,7 @@ export function UserExistsDialog({ open, onClose }: UserExistsDialogProps) {
               variant="default"
               className="w-full cursor-pointer"
             >
-              Close
+              {btn}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,0 +1,162 @@
+{
+  "mainPage": {
+    "title": "My Forms",
+    "createForm": "Create form",
+    "noForms": "No available forms",
+    "sort": {
+      "new": "New first",
+      "old": "Old first",
+      "az": "A-Z order",
+      "za": "Z-A order"
+    },
+    "search": "Search",
+    "deleteFormTitle": "Delete Form",
+    "deleteFormDescription": "Are you sure you want to delete this form?",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete"
+  },
+  "header": {
+    "mainTitle": "Home",
+    "newFormTitle": "New Form",
+    "userTitle": "Profile",
+    "darkTitle": "Dark theme",
+    "lightTitle": "Light theme",
+    "logOutButton": "Log out"
+  },
+  "signUp": {
+    "title": "Create your account",
+    "labelName": "Name",
+    "labelLastName": "Last name",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "labelRepeatPassword": "Repeat password",
+    "submitButton": "Create account",
+    "haveAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "dialogTitle": "Account already exists",
+    "dialogDescription": "A user with this email is already registered. Try logging in or use another email.",
+    "dialogButton": "Close"
+  },
+  "signIn": {
+    "title": "Sign in to your account",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "submitButton": "Sign in",
+    "haveAccount": "Don’t have an account?",
+    "signUpLink": "Create account"
+  },
+  "profile": {
+    "title": "My Profile",
+    "labelName": "Name",
+    "labelLastName": "Last name",
+    "dateTitle": "Date of registration:",
+    "cancelButton": "Cancel",
+    "toastSuccess": "Password successfully changed",
+    "toastErrorOne": "Wrong current password",
+    "toastErrorSecond": "Error updating password",
+    "titlePassword": "Change password",
+    "inputPassword": "Current password",
+    "requiredPassword": "Current password",
+    "inputNewPassword": "New password",
+    "submitButton": "Save password"
+  },
+  "formSubmit": {
+    "toastError": "Error sending answer form:",
+    "successMessage": "Response sent successfully!",
+    "timeTitle": "Attention!",
+    "timeDescOne": "You have",
+    "timeDescSecond": "to fill out this form!",
+    "timeButton": "Start",
+    "minTitle": "minute",
+    "hourTitle": "hour",
+    "secTitle": "second",
+    "plural": "s",
+    "secondsTitle": "0 seconds",
+    "submitButton": "Submit form",
+    "editButton": "Edit form",
+    "timerTitle": "Time left"
+  },
+  "formResponse": {
+    "title": "Responses",
+    "sort": {
+      "new": "New first",
+      "old": "Old first"
+    },
+    "tableTitle": "Table",
+    "analyticTitle": "Analytics",
+    "notFoundAnalytic": "Analytics not found.",
+    "noFound": "Nothing found."
+  },
+  "formEditor": {
+    "toastError": "Error saving form:",
+    "toastSuccessSave": "Form successfully saved",
+    "toastSuccessUpdate": "Form successfully updated",
+    "mobileTitle": "The constructor is not available on mobile devices.",
+    "title": "Create form",
+    "sidebarSuccess": "Form successfully deleted",
+    "sidebarError": "Error deleting form:",
+    "sidebarTitlePrimary": "Constructor",
+    "sidebarTitleSecond": "Settings",
+    "sidebarInput": "Enter tag",
+    "sidebarTimeLimit": "Limit",
+    "sidebarActionTitle": "Actions",
+    "sidebarViewTitle": "View",
+    "sidebarSaveButton": "Save form",
+    "formName": "Name",
+    "formDescription": "Description",
+    "requiredField": "Add at least 1 question.",
+    "singleAnswerTitle": "Single line answer",
+    "multipleAnswerTitle": "Multiple line answer",
+    "singleChoiceTitle": "Single choice list",
+    "multipleChoiceTitle": "Multiple choice list",
+    "aiButton": "AI Assistant",
+    "aiTitle": "AI Form Assistant",
+    "aiDescriptionOne": "Describe the form you want to generate.",
+    "aiDescriptionSecond": "For example, Form for an appointment with a dentist.",
+    "aiButtonSave": "Generate",
+    "aiButtonLoading": " Generating...",
+    "aiButtonClose": "Close",
+    "answerForm": {
+      "input": "Enter question",
+      "copyBelowTitle": "Create copy below",
+      "copyToEnd": "Create copy to end",
+      "requiredTitle": "Required field"
+    },
+    "multipleList": {
+      "inputTitle": "Enter question",
+      "inputOption": "Option",
+      "addButton": "Add",
+      "copyBelowTitle": "Create copy below",
+      "copyToEnd": "Create copy to end",
+      "requiredTitle": "Required field",
+      "singleChoice": "Single choice",
+      "multipleChoice": "Multiple choice"
+    }
+  },
+  "footer": {
+    "title": "Julia Sukharkova",
+    "description": ". All rights reserved."
+  },
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email format"
+    },
+    "password": {
+      "required": "Password is required",
+      "minLength": "Minimum 6 characters"
+    },
+    "name": {
+      "required": "Name is required",
+      "min": "Name must be at least 2 characters",
+      "max": "Name must be at most 50 characters",
+      "invalid": "Name must contain only letters and dashes"
+    },
+    "lastName": {
+      "required": "Last name is required"
+    },
+    "repeatPassword": {
+      "notMatch": "Passwords do not match"
+    }
+  }
+}
