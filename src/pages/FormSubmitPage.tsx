@@ -66,7 +66,7 @@ export const FormSubmitPage = () => {
   };
 
   return (
-    <div className="flex items-start w-full m-5 h-auto">
+    <div className="flex items-start m-5">
       <div className="rounded-md p-10 relative w-full backdrop-blur-[4px] bg-muted/40 shadow border">
         {isSuccess ? (
           <SuccessMessage title={t("formSubmit.successMessage")} />

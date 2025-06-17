@@ -129,7 +129,7 @@ export const FormContent = ({
                   <div className="flex flex-row gap-2">
                     {el.dataType === "single" ? (
                       <RadioGroup
-                        className="flex gap-2.5"
+                        className="flex max-sm:flex-col gap-2.5"
                         value={getAnswerAsString(el.id)}
                         onValueChange={(value) =>
                           setAnswers((prev) => ({
@@ -150,9 +150,9 @@ export const FormContent = ({
                       </RadioGroup>
                     ) : (
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex flex-row gap-2">
+                        <div className="flex flex-row max-sm:flex-col gap-2">
                           {el.options?.map((option, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
+                            <div key={idx} className="flex items-center  gap-2">
                               <Checkbox
                                 id={`${id}-${idx}`}
                                 checked={getAnswerAsArray(el.id).includes(

@@ -143,7 +143,7 @@ export const SidebarForm = ({
           ) : (
             <>
               <Save className="w-4 h-4" />
-              {t("formEditor.sidebarViewTitle")}
+              {t("formEditor.sidebarSaveButton")}
             </>
           )}
         </Button>
