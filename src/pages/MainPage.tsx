@@ -84,13 +84,14 @@ export const MainPage = () => {
             isEmpty={formElements.length > 0}
             onSearch={handleSearch}
           />
+          <div className="relative max-sm:w-full">
             <SortedMenu<SortType>
               value={sortOrder}
               onChange={setSortOrder}
               sortLabel={sortLabel}
               isDisabled={filterForm.length === 0}
               className="max-sm:w-full"
-            />
+            /></div>
         </div>
         {isSearching ? (
           <div className="flex items-center justify-center">
