@@ -109,7 +109,7 @@ export const FormResponsePage = () => {
       />
       <div className="relative w-full rounded-xl border border-primary-light backdrop-blur-[4px] bg-muted/40 p-6 transition-shadow shadow-[var(--shadow)]">
         <div className="flex flex-col justify-center items-center gap-2.5 mb-2.5">
-          <h1 className="text-lg text-primary font-medium">{form.name}</h1>
+          <h1 className="text-lg text-primary font-medium text-center">{form.name}</h1>
           <h2 className="text-center">{form.description}</h2>
         </div>
         <div className="flex flex-col gap-1 mb-2.5">
@@ -145,20 +145,21 @@ export const FormResponsePage = () => {
             <div
               className={cn(
                 "absolute top-0 h-full bg-primary transition-all duration-300 rounded-md",
-                isAnalitics ? "left-23 w-25 max-sm:left-28 max-sm:w-28" : "left-0 w-20 max-sm:w-25"
+                isAnalitics
+                  ? "left-23 w-25 max-sm:left-28 max-sm:w-28"
+                  : "left-0 w-20 max-sm:w-25"
               )}
             />
           </div>
         </div>
         <div className="flex justify-between max-sm:flex-col w-full max-sm:gap-2.5">
-        <div className="relative w-full">
           <SortedMenu
             value={sortOrder}
             onChange={setSortOrder}
             sortLabel={sortLabel}
             isDisabled={allAnswers.length === 0}
             className="max-sm:w-full"
-          /></div>
+          />
           <Button className="px-10 cursor-pointer" onClick={handleExport}>
             Export CSV
           </Button>

@@ -38,23 +38,29 @@ export const SortedMenu = <T extends string>({
   }, []);
 
   return (
-    <div ref={dropdownRef} className={cn("relative w-full", className)}>
+    <div ref={dropdownRef} className={cn("relative max-sm:w-full", className)}>
       <button
         disabled={isDisabled}
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
-          "w-full flex justify-between items-center px-4 py-2 border border-border-light rounded-md bg-muted text-primary-text cursor-pointer",
+          "flex justify-between items-center px-3 py-1.5 border border-border-light rounded-md bg-muted text-primary-text cursor-pointer",
           "hover:border-primary focus:outline-none focus:border-primary",
           open && "text-primary-text/40 border-accent focus:border-accent",
-          isDisabled && "opacity-50 cursor-not-allowed"
+          isDisabled && "opacity-50 cursor-not-allowed",
+          className
         )}
       >
         <span className="text-center w-full">{sortLabel[value]}</span>
         <ChevronDown className="w-4 h-4" />
       </button>
-
       {open && (
-        <div className="absolute left-0 top-full mt-1 w-full rounded-md shadow-md bg-popover z-50 text-primary-text overflow-hidden">
+        <div
+          className={cn(
+            "absolute left-0 top-full mt-1 rounded-md shadow-md bg-popover z-50 text-primary-text overflow-hidden",
+            "max-sm:w-full",
+            "min-w-full sm:min-w-[100px]"
+          )}
+        >
           {(Object.entries(sortLabel) as [T, string][]).map(([key, label]) => (
             <button
               key={key}
