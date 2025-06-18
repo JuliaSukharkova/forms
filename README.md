@@ -10,6 +10,8 @@
 ## 🚀 Features
 
 - **🎯 Drag & Drop Form Builder**: Create dynamic forms on `FormEditorPage` using `@dnd-kit` (text, dropdowns, checkboxes, multi-select, time pickers).
+- **🧠 AI Form Assistant (powered by Gemini AI)**: You can describe any form in natural language — and it gets built automatically!
+- **🌍 Multilingual support**: The app now supports English, Russian, and Polish. It automatically detects your system language and allows manual switching any time.
 - **⏱️ Form Timer**: Track and limit form completion time on `FormSubmitPage` with a custom `Timer` component and warnings.
 - **📝 Form Submission**: User-friendly forms with validation using React Hook Form on `FormSubmitPage`.
 - **📊 Analytics & CSV Export**: Visualize responses with Recharts (pie charts) on `FormResponsesPage` and export to CSV.
@@ -48,12 +50,14 @@
 - **Frontend**: React, TypeScript, Vite
 - **UI**: Tailwind CSS, shadcn/ui, Radix UI
 - **State Management**: React Context, useState
-- **Forms & Validation**: React Hook Form, Yup
+- **Forms & Validation**: React Hook Form
 - **Analytics**: Recharts
 - **Authentication**: Firebase Authentication
 - **Database**: Supabase (PostgreSQL)
 - **Tools**: Git, ESLint, Prettier
 - **Deployment**: GitHub Pages
+- **AI Assistant**: Gemini AI
+- **Localization**: i18n
 
 ---
 
@@ -102,7 +106,7 @@
 - **Analytics**: Leveraged Recharts to create interactive pie charts on `FormResponsesPage`.
 - **Performance**: Optimized rendering with `useMemo` and lazy loading for large forms.
 - **Integrations**: Gained expertise in Firebase Authentication and Supabase for secure data management.
-
+- **AI agent**: Introduced an AI agent that turns user intent into a live form — powered by Gemini AI and stored via Supabase. 
 ---
 
 ## 🌟 Why This Project?
